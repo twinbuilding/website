@@ -1,5 +1,4 @@
 :root {
-  --hue-black: #000000;
   --hue-noir0: #262626;
   --hue-noir1: #363636;
   --hue-noir2: #464646;
@@ -12,17 +11,20 @@
   --hue-blan2: #ed882f;
   --hue-white: #f2f2f2;
 
+  --hue-jaune: #f7ab1a;
+  --hue-noire: #000000;
+
   --hue-opaque-bg: rgba(38, 38, 38, 0.35);
-  --background: var(--hue-black);
+  --background: var(--hue-noire);
   --foreground: var(--hue-white);
-  --hue-accent-1: var(--hue-black);
+  --hue-accent-1: var(--hue-noire);
   --hue-accent-2: var(--hue-noir0);
   --hue-accent-3: var(--hue-noir1);
   --hue-accent-4: var(--hue-noir2);
   --hue-cotext-1: var(--hue-giron);
   --hue-cotext-2: var(--hue-slate);
   --hue-cotext-3: var(--hue-blan1);
-  --hue-cotext-4: var(--hue-giron);
+  --hue-cotext-4: var(--hue-jaune);
 
   --font-size: 16px;
   /* Border Radius Variables */
@@ -48,21 +50,21 @@
 
 :root[data-theme="light"] {
   --background: var(--hue-white);
-  --foreground: var(--hue-black);
+  --foreground: var(--hue-noire);
   --hue-accent-1: var(--hue-blan0);
   --hue-accent-2: var(--hue-blan1);
   --hue-accent-3: var(--hue-blan2);
   --hue-accent-4: var(--hue-white);
-  --hue-cotext-1: var(--hue-black);
+  --hue-cotext-1: var(--hue-noire);
   --hue-cotext-2: var(--hue-noir0);
   --hue-cotext-3: var(--hue-noir1);
   --hue-cotext-4: var(--hue-giron);
 }
 
 :root[data-theme="dark"] {
-  --background: var(--hue-black);
+  --background: var(--hue-noire);
   --foreground: var(--hue-white);
-  --hue-accent-1: var(--hue-black);
+  --hue-accent-1: var(--hue-noire);
   --hue-accent-2: var(--hue-noir0);
   --hue-accent-3: var(--hue-noir1);
   --hue-accent-4: var(--hue-noir2);
@@ -74,9 +76,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --background: var(--hue-black);
+    --background: var(--hue-noire);
     --foreground: var(--hue-white);
-    --hue-accent-1: var(--hue-black);
+    --hue-accent-1: var(--hue-noire);
     --hue-accent-2: var(--hue-noir0);
     --hue-accent-3: var(--hue-noir1);
     --hue-accent-4: var(--hue-noir2);
@@ -126,7 +128,7 @@ html {
   
   body::-webkit-scrollbar {
     width: 0;
-  height: 0;
+    height: 0;
 }
 
 @keyframes auroraShift {
@@ -173,10 +175,9 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 main {
+  width: 100%;
   flex: 1;
   margin: 0 auto;
-  padding: 2rem 0;
-  max-width: 1200px;
   position: relative;
 }
 
@@ -192,8 +193,11 @@ button {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  text-transform: uppercase;
   line-height: 1.25;
   letter-spacing: -0.5px;
+  color: var(--hue-jaune);
+  font-family: var(--font-orbitron), sans-serif;
 }
 h1 {
   margin-bottom: 2rem;

@@ -111,12 +111,14 @@
 		{
 			"name": "Samuel Okoro",
 			"role": "Development Director, Meridian Group",
-			"quote": "Clear documentation, proactive coordination, and on-time delivery."
+			"quote": "Clear documentation, proactive coordination, and on-time delivery.",
+			"image": "/pages/testimonials/1.jpg"
 		},
 		{
 			"name": "Amina Yusuf",
 			"role": "Project Manager, Westline Estates",
-			"quote": "Their MEP team reduced our energy loads without compromising comfort."
+			"quote": "Their MEP team reduced our energy loads without compromising comfort.",
+			"image": "/pages/testimonials/2.jpg"
 		}
 	],
 	"certifications": [

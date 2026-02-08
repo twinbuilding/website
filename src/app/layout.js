@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Orbitron } from "next/font/google";
 import "@/styles/globals.css";
 import Footer from "@/components/Footer";
 import FloatingThemeToggle from "@/components/ThemeToggle/FloatingThemeToggle";
@@ -10,8 +10,8 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
   subsets: ["latin"],
 });
 
@@ -22,7 +22,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${orbitron.variable}`}>
       <head>
         <meta name="apple-mobile-web-app-title" content="TBuilding" />
       </head>

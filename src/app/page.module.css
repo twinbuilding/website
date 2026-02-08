@@ -1,45 +1,120 @@
 .main {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 2rem 2rem;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 0;
 }
-.main img:hover {
+.main article {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.main article:first-of-type section img {
+  margin: 0 auto;
+  width: 75vw;
+}
+
+.testimonialsSection {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.overtitle {
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hue-cotext-2);
+}
+
+.testimonialsHeading {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.testimonialsSubheading {
+  max-width: 40rem;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.testimonialCard {
+  background: var(--hue-opaque-bg);
+  border-radius: var(--bor-radius-lg);
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem 1.75rem;
+  backdrop-filter: blur(10px);
+}
+
+.testimonialHeader {
+  min-height: 2rem;
+}
+
+.testimonialAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  float: left;
+  margin: 0 1rem 0.5rem 0;
+}
+
+.testimonialName {
+  font-weight: 600;
+}
+
+.testimonialRole {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.testimonialQuote {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.testimonialSignature {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  text-align: right;
+  font-style: italic;
+}
+
+.main .text {
+  text-align: center;
+}
+
+.main article section img:hover {
   transform: scale(1.05);
   transition: transform 0.3s ease;
 }
 
-.main h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--hue-cotext-4)
-}
-
-.main p {
-  font-size: 1.5rem;
-  margin: 0.5rem 0;
-}
-.main p:first-of-type {
-  margin-top: 0;
-  font-style: italic;
-}
-.main p:last-of-type {
-  margin: 3rem auto 0;
-  font-family: var(--font-geist-mono);
-  font-size: 1rem;
-  text-align: center;
-}
-
 @media (min-width: 660px) {
-  .main {
-    max-width: 75%;
-  }
-  .main p {
+  .main .text {
     font-size: 1.2rem;
   }
-  .main p:last-of-type {
+  .main .text:last-of-type {
     text-align: left;
   }
-  
+
+  .testimonialsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
