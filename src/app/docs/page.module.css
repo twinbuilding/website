@@ -1,0 +1,368 @@
+.main {
+  padding: 4rem 1.5rem 5rem;
+}
+
+.hero {
+  max-width: 920px;
+  margin: 0 auto 3.5rem;
+}
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: var(--hue-cotext-1);
+  margin-bottom: 0.75rem;
+}
+
+.section {
+  max-width: 1100px;
+  margin: 0 auto 3.5rem;
+}
+
+.sectionHeader {
+  margin-bottom: 1.5rem;
+}
+
+.sectionHeader p {
+  margin: 0;
+  color: var(--hue-cotext-2);
+}
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+.storyCard {
+  padding: 1.75rem;
+  border-radius: var(--bor-radius-lg);
+  background: var(--hue-accent-1);
+  color: var(--foreground);
+}
+
+.body {
+  margin: 0.6rem 0;
+  color: var(--hue-cotext-2);
+}
+
+.meta {
+  margin: 0.2rem 0 0.8rem;
+  color: var(--hue-cotext-4);
+  font-size: 0.9rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.statCard {
+  padding: 1.5rem;
+  border-radius: var(--bor-radius-md);
+  background: var(--hue-accent-2);
+  color: var(--foreground);
+}
+
+.statValue {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.statLabel {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.certGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.certCard {
+  padding: 1rem 1.25rem;
+  border-radius: var(--bor-radius);
+  background: var(--hue-accent-3);
+  border: 1px solid var(--hue-accent-4);
+  color: var(--hue-cotext-2);
+}
+
+.formCard {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: var(--bor-radius-xl);
+  background: color-mix(in srgb, var(--hue-accent-2) 72%, transparent);
+  border: 1px solid var(--hue-accent-4);
+  box-shadow: var(--box-shadow-lg);
+}
+
+.docTypeRow {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.docTypeButton {
+  padding: 0.55rem 1rem;
+  border-radius: var(--bor-radius-pill);
+  border: 1px solid var(--hue-accent-4);
+  background: color-mix(in srgb, var(--hue-accent-1) 70%, transparent);
+  color: var(--hue-cotext-1);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border 0.2s ease;
+}
+
+.docTypeButton:hover {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--hue-accent-2) 75%, transparent);
+}
+
+.docTypeButtonActive {
+  border-color: var(--hue-cotext-1);
+  background: color-mix(in srgb, var(--hue-accent-3) 70%, transparent);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.inputGroup {
+  display: grid;
+  gap: 0.5rem;
+  color: var(--hue-cotext-1);
+  font-weight: 600;
+  padding-bottom: 2rem;
+}
+
+.inputGroup input {
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--bor-radius);
+  border: 1px solid var(--hue-accent-4);
+  background: color-mix(in srgb, var(--hue-accent-1) 55%, transparent);
+  color: var(--hue-cotext-1);
+}
+
+:global(:root[data-theme="light"]) .inputGroup input {
+  background: color-mix(in srgb, var(--hue-white) 65%, transparent);
+}
+
+@media (prefers-color-scheme: light) {
+  :global(:root:not([data-theme])) .inputGroup input {
+    background: color-mix(in srgb, var(--hue-white) 65%, transparent);
+  }
+}
+
+.fileHint {
+  font-size: 0.85rem;
+  color: var(--hue-cotext-3);
+}
+
+.autocompleteWrapper {
+  position: relative;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.5rem;
+  background: var(--hue-accent-2);
+  border: 1px solid var(--hue-accent-4);
+  border-radius: var(--bor-radius);
+  box-shadow: var(--box-shadow-sm);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.suggestionItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--hue-cotext-1);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.suggestionItem:hover {
+  background: color-mix(in srgb, var(--hue-accent-3) 65%, transparent);
+}
+
+.suggestionItem:first-child {
+  border-radius: var(--bor-radius) var(--bor-radius) 0 0;
+}
+
+.suggestionItem:last-child {
+  border-radius: 0 0 var(--bor-radius) var(--bor-radius);
+}
+
+.suggestionName {
+  font-weight: 600;
+}
+
+.suggestionId {
+  font-size: 0.85rem;
+  color: var(--hue-cotext-3);
+}
+
+.table {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(160px, 1.4fr) minmax(70px, 0.4fr) minmax(90px, 0.5fr) minmax(100px, 0.6fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.rowHeader {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--hue-cotext-3);
+}
+
+.row input {
+  padding: 0.65rem 0.8rem;
+  border-radius: var(--bor-radius-sm);
+  border: 1px solid var(--hue-accent-4);
+  background: color-mix(in srgb, var(--hue-accent-1) 55%, transparent);
+  color: var(--hue-cotext-1);
+}
+
+:global(:root[data-theme="light"]) .row input {
+  background: color-mix(in srgb, var(--hue-white) 65%, transparent);
+}
+
+@media (prefers-color-scheme: light) {
+  :global(:root:not([data-theme])) .row input {
+    background: color-mix(in srgb, var(--hue-white) 65%, transparent);
+  }
+}
+
+.row span {
+  color: var(--hue-cotext-1);
+  font-weight: 600;
+}
+
+.removeButton {
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--bor-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--hue-accent-4) 65%, transparent);
+  background: transparent;
+  color: var(--hue-cotext-2);
+  cursor: pointer;
+  transition: border 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.removeButton:hover {
+  transform: translateY(-1px);
+  color: var(--hue-cotext-1);
+  border-color: var(--hue-cotext-1);
+}
+
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.addButton {
+  padding: 0.65rem 1.2rem;
+  border-radius: var(--bor-radius-pill);
+  border: 1px solid var(--hue-accent-4);
+  background: color-mix(in srgb, var(--hue-accent-3) 65%, transparent);
+  color: var(--hue-cotext-1);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.addButton:hover {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--hue-accent-4) 65%, transparent);
+}
+
+.totalBox {
+  display: grid;
+  gap: 0.25rem;
+  text-align: right;
+  color: var(--hue-cotext-1);
+}
+
+.totalBox strong {
+  font-size: 1.25rem;
+}
+
+.generateButton {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: var(--bor-radius);
+  border: none;
+  background: var(--hue-cotext-1);
+  color: var(--hue-accent-1);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.generateButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-md);
+}
+
+@media (max-width: 900px) {
+  .main {
+    padding: 3rem 1.25rem 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    margin-bottom: 2.5rem;
+  }
+
+  .storyCard,
+  .statCard {
+    padding: 1.25rem;
+  }
+
+  .formCard {
+    padding: 1.5rem;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .rowHeader {
+    display: none;
+  }
+
+  .totalBox {
+    text-align: left;
+    width: 100%;
+  }
+}

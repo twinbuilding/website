@@ -1,0 +1,62 @@
+{
+  "customers": [
+    {
+      "id": 5050,
+      "name": {
+        "first": "Clark Vince",
+        "last": "Afable"
+      },
+      "title": "Arch.",
+      "contact": {
+        "email": "contact@afable.com",
+        "phone": "+1 555-123-4567"
+      }
+    },
+    {
+      "id": 5051,
+      "name": {
+        "first": "Faith",
+        "last": "Genrev"
+      },
+      "title": "Engr.",
+      "contact": {
+        "email": "contact@globex.com",
+        "phone": "+1 555-987-6543"
+      }
+    },
+    {
+      "id": 5052,
+      "name": {
+        "first": "Rian",
+        "last": "Tilly"
+      },
+      "title": "Ms.",
+      "contact": {
+        "email": "contact@initech.com",
+        "phone": "+1 555-555-5555"
+      }
+    }
+  ],
+  "services": [
+    {
+      "id": 1001,
+      "name": "Structural Engineering",
+      "price": 5000
+    },
+    {
+      "id": 1002,
+      "name": "Civil & Site Development",
+      "price": 3000
+    },
+    {
+      "id": 1003,
+      "name": "MEP Systems",
+      "price": 4000
+    },
+    {
+      "id": 1004,
+      "name": "Project Management",
+      "price": 3500
+    }
+  ]
+}

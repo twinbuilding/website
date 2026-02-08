@@ -1,0 +1,131 @@
+.main {
+  padding: 4rem 1.5rem 5rem;
+}
+
+.hero {
+  max-width: 920px;
+  margin: 0 auto 3.5rem;
+}
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: var(--hue-cotext-1);
+  margin-bottom: 0.75rem;
+}
+
+.lede {
+  font-size: 1.1rem;
+  max-width: 720px;
+  color: var(--hue-cotext-2);
+}
+
+.section {
+  max-width: 1100px;
+  margin: 0 auto 3.5rem;
+}
+
+.sectionHeader {
+  margin-bottom: 1.5rem;
+}
+
+.sectionHeader p {
+  margin: 0;
+  color: var(--hue-cotext-2);
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.serviceCard {
+  padding: 1.75rem;
+  border-radius: var(--bor-radius-lg);
+  background: var(--hue-accent-3);
+  border: 1px solid var(--hue-accent-4);
+  box-shadow: var(--box-shadow-lg);
+}
+
+.serviceCard h3 {
+  margin: 0 0 0.75rem;
+  color: var(--hue-cotext-1);
+}
+
+.serviceCard p {
+  margin: 0;
+  color: var(--hue-cotext-2);
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.processCard {
+  padding: 1.5rem;
+  border-radius: var(--bor-radius-md);
+  background: var(--hue-accent-1);
+  color: var(--foreground);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.statCard {
+  padding: 1.5rem;
+  border-radius: var(--bor-radius-md);
+  background: var(--hue-accent-2);
+  color: var(--foreground);
+}
+
+.statValue {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.statLabel {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.certList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.certItem {
+  padding: 0.85rem 1rem;
+  border-radius: var(--bor-radius);
+  background: var(--hue-accent-3);
+  border: 1px solid var(--hue-accent-4);
+  color: var(--hue-cotext-2);
+}
+
+@media (max-width: 900px) {
+  .main {
+    padding: 3rem 1.25rem 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    margin-bottom: 2.5rem;
+  }
+
+  .serviceCard,
+  .processCard,
+  .statCard {
+    padding: 1.25rem;
+  }
+}

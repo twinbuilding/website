@@ -1,0 +1,107 @@
+.main {
+  padding: 4rem 1.5rem 5rem;
+}
+
+.hero {
+  max-width: 920px;
+  margin: 0 auto 3.5rem;
+}
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: var(--hue-cotext-1);
+  margin-bottom: 0.75rem;
+}
+
+.lede {
+  font-size: 1.1rem;
+  max-width: 720px;
+  color: var(--hue-cotext-2);
+}
+
+.section {
+  max-width: 1100px;
+  margin: 0 auto 3.5rem;
+}
+
+.sectionHeader {
+  margin-bottom: 1.5rem;
+}
+
+.sectionHeader p {
+  margin: 0;
+  color: var(--hue-cotext-2);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 1.75rem;
+  border-radius: var(--bor-radius-rem);
+  background: var(--hue-accent-3);
+  border: 1px solid var(--hue-accent-4);
+  box-shadow: var(--box-shadow-lg);
+}
+
+.body {
+  margin: 0.4rem 0;
+  color: var(--hue-cotext-2);
+}
+
+.meta {
+  margin: 0.5rem 0 0;
+  color: var(--hue-cotext-4);
+  font-size: 0.9rem;
+}
+
+.socialGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.socialCard {
+  padding: 1rem 1.25rem;
+  border-radius: var(--bor-radius-rem);
+  background: var(--hue-accent-1);
+  color: var(--foreground);
+  text-align: center;
+  font-weight: 500;
+}
+
+.mapPlaceholder {
+  height: 260px;
+  border-radius: var(--bor-radius-rem);
+  background: linear-gradient(135deg, var(--hue-slate), var(--hue-steel), var(--hue-iblue));
+  position: relative;
+  overflow: hidden;
+}
+
+.mapPlaceholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(242, 242, 242, 0.5), transparent 55%);
+}
+
+@media (max-width: 900px) {
+  .main {
+    padding: 3rem 1.25rem 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    margin-bottom: 2.5rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+}

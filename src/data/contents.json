@@ -1,0 +1,143 @@
+{
+	"website": {
+		"title": {
+			"full": "Twin Building Engineering Design Services",
+			"base": "Twin Building",
+			"tail": "Engineering Design Services"
+		},
+		"tagline": "Precision design, resilient infrastructure",
+        "domain": "www.twinbuilding.com",
+		"address": "Doña Brigida, Tolosa, Leyte, Philippines",
+        "logo": "icon0.svg",
+        "email": "info@twinbuilding.com",
+        "hours": "Mon-Fri, 9:00-18:00",
+        "emergency": "+63 920 000 0000"
+	},
+	"author": {
+		"name": {
+            "full": "Engr. Israel C. Cesar",
+            "base": "Cesar, Israel C."
+        },
+        "title": "Structural Engineer",
+		"email": "israel.cesar@twinbuilding.com",
+		"contact": "+63 910 742 0467",
+		"avatar": "https://via.placeholder.com/300x300.png?text=Israel+Cesar",
+		"bankDetails": [
+			{
+				"bank": "GCash",
+				"number": "09107420467",
+                "icon": "gcash.png"
+			},
+			{
+				"bank": "Philippine National Bank",
+				"number": "1230 9753 502",
+                "icon": "pnb.png"
+			},
+			{
+				"bank": "MariBank",
+				"number": "1230 9753 502",
+                "icon": "maribank.png"
+			}
+		]
+	},
+	"navigation": [
+        "Services",
+		"Projects",
+		"Contact",
+		"About"
+	],
+	"overview": {
+		"founded": 2009,
+		"teamSize": 48,
+		"coverage": "Philippines",
+		"summary": "Structural, civil, and MEP engineering partner delivering end-to-end design, analysis, and construction support."
+	},
+	"services": [
+		{
+			"name": "Structural Engineering",
+			"description": "Concept-to-detail design, finite element analysis, and peer review."
+		},
+		{
+			"name": "Civil & Site Development",
+			"description": "Drainage, grading, pavements, utilities, and environmental coordination."
+		},
+		{
+			"name": "MEP Systems",
+			"description": "Mechanical, electrical, and plumbing design with energy modeling."
+		},
+		{
+			"name": "Project Management",
+			"description": "Scope, schedule, and cost controls with construction-phase support."
+		}
+	],
+	"projects": [
+		{
+			"name": "Ikeja General Hospital",
+			"location": "Bislig, Leyte, Philippines",
+			"year": 2024,
+			"scope": "Seismic retrofit and MEP upgrade",
+			"status": "In progress"
+		},
+		{
+			"name": "Emerald Tower",
+			"location": "Tanghas, Leyte, Philippines",
+			"year": 2023,
+			"scope": "Structural and MEP design",
+			"status": "Completed"
+		},
+		{
+			"name": "Kwara Logistics Hub",
+			"location": "Cagayan de Oro, Philippines",
+			"year": 2022,
+			"scope": "Civil works and utilities",
+			"status": "Completed"
+		}
+	],
+	"stats": [
+		{
+			"label": "Projects Delivered",
+			"value": "180+"
+		},
+		{
+			"label": "Years in Practice",
+			"value": "10+"
+		},
+		{
+			"label": "Repeat Clients",
+			"value": "62%"
+		}
+	],
+	"testimonials": [
+		{
+			"name": "Samuel Okoro",
+			"role": "Development Director, Meridian Group",
+			"quote": "Clear documentation, proactive coordination, and on-time delivery."
+		},
+		{
+			"name": "Amina Yusuf",
+			"role": "Project Manager, Westline Estates",
+			"quote": "Their MEP team reduced our energy loads without compromising comfort."
+		}
+	],
+	"certifications": [
+		"COREN Registered Engineers",
+		"NSE Corporate Member",
+		"ISO 9001 Quality Management"
+	],
+	"social": {
+		"linkedin": "https://www.linkedin.com/company/twinbuilding",
+		"x": "https://x.com/twinbuilding",
+		"instagram": "https://www.instagram.com/twinbuilding"
+	},
+	"seo": {
+		"keywords": [
+			"engineering firm",
+			"structural design",
+			"civil engineering",
+			"MEP consulting",
+			"project management",
+			"Lagos engineering"
+		],
+		"description": "Twin Building Engineering delivers structural, civil, and MEP services for resilient, efficient buildings across the Philippines."
+	}
+}
