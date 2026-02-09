@@ -14,7 +14,7 @@
   flex-direction: column;
   justify-content: center;
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 .main article:first-of-type section img:not(.heroLogo) {
   margin: 0 auto;
@@ -48,83 +48,6 @@
   color: var(--muted-foreground);
 }
 
-.testimonialsSection {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.overtitle {
-  font-size: 0.85rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.testimonialsHeading {
-  font-size: 1.8rem;
-  margin: 0;
-}
-
-.testimonialsSubheading {
-  max-width: 40rem;
-  font-size: 0.95rem;
-  color: var(--muted-foreground);
-}
-
-.testimonialsGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-.testimonialCard {
-  background: var(--surface-1);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  padding: 1.5rem 1.75rem;
-}
-
-.testimonialHeader {
-  min-height: 2rem;
-}
-
-.testimonialAvatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  float: left;
-  margin: 0 1rem 0.5rem 0;
-}
-
-.testimonialName {
-  font-weight: 600;
-}
-
-.testimonialRole {
-  font-size: 0.9rem;
-  color: var(--muted-foreground);
-}
-
-.testimonialQuote {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: var(--foreground);
-}
-
-.testimonialSignature {
-  margin-top: 0.75rem;
-  font-size: 0.9rem;
-  text-align: right;
-  font-style: italic;
-  color: var(--muted-foreground);
-}
 
 .main .text {
   text-align: center;
@@ -143,7 +66,4 @@
     text-align: left;
   }
 
-  .testimonialsGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
