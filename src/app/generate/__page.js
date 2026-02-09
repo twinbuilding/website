@@ -663,17 +663,22 @@ export default function GeneratePage() {
 
 	const handleGenerate = async () => {
 		if (!isFormValid()) {
-			// Trigger the visual error state
+			// Clear any existing timeout
+			if (attemptedSubmitRef.current) {
+				clearTimeout(attemptedSubmitRef.current);
+			}
+			
+			// Trigger the animation by setting attemptedSubmit to true
 			setAttemptedSubmit(true);
-
-			// Optional: Reset the flashing effect after 1.5s
-			if (attemptedSubmitRef.current) clearTimeout(attemptedSubmitRef.current);
+			
+			// Reset after animation completes (1.5 seconds for 3 flashes of 0.5s each)
 			attemptedSubmitRef.current = setTimeout(() => {
 				setAttemptedSubmit(false);
+				attemptedSubmitRef.current = null;
 			}, 1500);
 			
-			return; // Stop the PDF generation
-		}	
+			return;
+		}
 		if (docType === "invoice" && !invoiceData) {
 			alert("Upload a quotation JSON file before generating the invoice.");
 			return;

@@ -142,6 +142,25 @@
   color: var(--foreground);
 }
 
+input.inputError,
+select.inputError {
+  border-color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.05) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+  animation: flashError 0.5s ease-in-out 3;
+}
+
+@keyframes flashError {
+  0%, 100% {
+    background-color: rgba(239, 68, 68, 0.05);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+  50% {
+    background-color: rgba(239, 68, 68, 0.2);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+  }
+}
+
 .fileHint {
   font-size: 0.75rem;
   color: var(--muted-foreground);
@@ -379,4 +398,25 @@
     text-align: left;
     width: 100%;
   }
+}
+
+/* page.module.css */
+
+.inputError {
+    border: 2px solid #ff4d4d !important;
+    background-color: #fff5f5;
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+}
+
+/* Optional: change the label color when error is present */
+.inputGroup:has(.inputError) span {
+    color: #d32f2f;
+    font-weight: bold;
 }
