@@ -7,13 +7,16 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <article>
-        <section>
-      <Image
-        src="branding/logo_signature.svg"
-        alt={contents.website.title.full}
-        width={200}
-        height={200}
-      />
+        <section className={styles.heroSection}>
+          <Image
+            src={`${contents.website.logo}`}
+            alt={contents.website.title.full}
+            width={240}
+            height={240}
+            className={styles.heroLogo}
+          />
+          <h1 className={styles.heroTitle}>{contents.website.title.base}</h1>
+          <p className={styles.heroTail}>{contents.website.title.tail}</p>
         </section>
       </article>
 

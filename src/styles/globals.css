@@ -1,91 +1,83 @@
 :root {
-  --hue-noir0: #262626;
-  --hue-noir1: #363636;
-  --hue-noir2: #464646;
-  --hue-giron: #F28627;
-  --hue-slate: #F29838;
-  --hue-steel: #F2AC4D;
-  --hue-iblue: #F3C167;
-  --hue-blan0: #fa9033;
-  --hue-blan1: #fb9841;
-  --hue-blan2: #ed882f;
-  --hue-white: #f2f2f2;
-
   --hue-jaune: #f7ab1a;
   --hue-noire: #000000;
+  --hue-blanc: #f2f2f2;
 
-  --hue-opaque-bg: rgba(38, 38, 38, 0.35);
-  --background: var(--hue-noire);
-  --foreground: var(--hue-white);
-  --hue-accent-1: var(--hue-noire);
-  --hue-accent-2: var(--hue-noir0);
-  --hue-accent-3: var(--hue-noir1);
-  --hue-accent-4: var(--hue-noir2);
-  --hue-cotext-1: var(--hue-giron);
-  --hue-cotext-2: var(--hue-slate);
-  --hue-cotext-3: var(--hue-blan1);
-  --hue-cotext-4: var(--hue-jaune);
+  --background: var(--hue-blanc);
+  --foreground: var(--hue-noire);
+  --surface-1: color-mix(in srgb, var(--hue-blanc) 94%, var(--hue-noire));
+  --surface-2: color-mix(in srgb, var(--hue-blanc) 88%, var(--hue-noire));
+  --surface-3: color-mix(in srgb, var(--hue-blanc) 82%, var(--hue-noire));
+  --muted: color-mix(in srgb, var(--hue-noire) 10%, var(--hue-blanc));
+  --muted-foreground: color-mix(in srgb, var(--hue-noire) 55%, var(--hue-blanc));
+  --border: color-mix(in srgb, var(--hue-noire) 14%, var(--hue-blanc));
+  --input: color-mix(in srgb, var(--hue-noire) 10%, var(--hue-blanc));
+  --accent: var(--hue-jaune);
+  --accent-soft: color-mix(in srgb, var(--hue-jaune) 18%, var(--hue-blanc));
+  --accent-strong: color-mix(in srgb, var(--hue-jaune) 65%, var(--hue-noire));
+  --accent-foreground: var(--hue-noire);
+  --ring: color-mix(in srgb, var(--hue-jaune) 70%, var(--hue-noire));
 
-  --font-size: 16px;
-  /* Border Radius Variables */
-  --bor-radius: .5rem;
-  --bor-radius-sm: .25rem;
-  --bor-radius-md: .35rem;
-  --bor-radius-lg: .5rem;
-  --bor-radius-xl: .75rem;
-  --bor-radius-pill: 999px;
-  --bor-radius-circle: 50%;
-  --bor-radius-rem: .75rem;
+  --radius-sm: 0.35rem;
+  --radius-md: 0.6rem;
+  --radius-lg: 0.9rem;
+  --radius-xl: 1.2rem;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
 
-  /* Box Shadow Variables */
-  --box-shadow: 0 4px 10px color-mix(in srgb, var(--hue-cotext-1) 8%, transparent);
-  --box-shadow-sm: 0 3px 8px color-mix(in srgb, var(--hue-cotext-1) 7%, transparent);
-  --box-shadow-md: 0 4px 12px color-mix(in srgb, var(--hue-cotext-1) 9%, transparent);
-  --box-shadow-lg: 0 6px 16px color-mix(in srgb, var(--hue-cotext-1) 7%, transparent);
-  --box-shadow-header: 0 4px 10px color-mix(in srgb, var(--hue-accent-1) 6%, transparent);
-  --box-shadow-drawer: 4px 0 12px color-mix(in srgb, var(--hue-accent-2) 35%, transparent);
-  --box-shadow-inset: inset 0 0 0 1px color-mix(in srgb, var(--hue-cotext-1) 8%, transparent);
-  --box-shadow-ring: 0 0 0 1px color-mix(in srgb, var(--hue-cotext-1) 8%, transparent);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.16);
+  --shadow-inset: inset 0 0 0 1px color-mix(in srgb, var(--hue-noire) 18%, transparent);
 }
 
 :root[data-theme="light"] {
-  --background: var(--hue-white);
+  --background: var(--hue-blanc);
   --foreground: var(--hue-noire);
-  --hue-accent-1: var(--hue-blan0);
-  --hue-accent-2: var(--hue-blan1);
-  --hue-accent-3: var(--hue-blan2);
-  --hue-accent-4: var(--hue-white);
-  --hue-cotext-1: var(--hue-noire);
-  --hue-cotext-2: var(--hue-noir0);
-  --hue-cotext-3: var(--hue-noir1);
-  --hue-cotext-4: var(--hue-giron);
+  --surface-1: color-mix(in srgb, var(--hue-blanc) 94%, var(--hue-noire));
+  --surface-2: color-mix(in srgb, var(--hue-blanc) 88%, var(--hue-noire));
+  --surface-3: color-mix(in srgb, var(--hue-blanc) 82%, var(--hue-noire));
+  --muted: color-mix(in srgb, var(--hue-noire) 10%, var(--hue-blanc));
+  --muted-foreground: color-mix(in srgb, var(--hue-noire) 55%, var(--hue-blanc));
+  --border: color-mix(in srgb, var(--hue-noire) 14%, var(--hue-blanc));
+  --input: color-mix(in srgb, var(--hue-noire) 10%, var(--hue-blanc));
+  --accent-soft: color-mix(in srgb, var(--hue-jaune) 18%, var(--hue-blanc));
+  --accent-strong: color-mix(in srgb, var(--hue-jaune) 65%, var(--hue-noire));
+  --accent-foreground: var(--hue-noire);
+  --ring: color-mix(in srgb, var(--hue-jaune) 70%, var(--hue-noire));
 }
 
 :root[data-theme="dark"] {
   --background: var(--hue-noire);
-  --foreground: var(--hue-white);
-  --hue-accent-1: var(--hue-noire);
-  --hue-accent-2: var(--hue-noir0);
-  --hue-accent-3: var(--hue-noir1);
-  --hue-accent-4: var(--hue-noir2);
-  --hue-cotext-1: var(--hue-giron);
-  --hue-cotext-2: var(--hue-slate);
-  --hue-cotext-3: var(--hue-blan1);
-  --hue-cotext-4: var(--hue-giron);
+  --foreground: var(--hue-blanc);
+  --surface-1: color-mix(in srgb, var(--hue-noire) 82%, var(--hue-blanc));
+  --surface-2: color-mix(in srgb, var(--hue-noire) 74%, var(--hue-blanc));
+  --surface-3: color-mix(in srgb, var(--hue-noire) 66%, var(--hue-blanc));
+  --muted: color-mix(in srgb, var(--hue-noire) 70%, var(--hue-blanc));
+  --muted-foreground: color-mix(in srgb, var(--hue-blanc) 72%, var(--hue-noire));
+  --border: color-mix(in srgb, var(--hue-noire) 60%, var(--hue-blanc));
+  --input: color-mix(in srgb, var(--hue-noire) 68%, var(--hue-blanc));
+  --accent-soft: color-mix(in srgb, var(--hue-jaune) 16%, var(--hue-noire));
+  --accent-strong: color-mix(in srgb, var(--hue-jaune) 72%, var(--hue-noire));
+  --accent-foreground: var(--hue-noire);
+  --ring: color-mix(in srgb, var(--hue-jaune) 70%, var(--hue-noire));
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     --background: var(--hue-noire);
-    --foreground: var(--hue-white);
-    --hue-accent-1: var(--hue-noire);
-    --hue-accent-2: var(--hue-noir0);
-    --hue-accent-3: var(--hue-noir1);
-    --hue-accent-4: var(--hue-noir2);
-    --hue-cotext-1: var(--hue-giron);
-    --hue-cotext-2: var(--hue-slate);
-    --hue-cotext-3: var(--hue-blan1);
-    --hue-cotext-4: var(--hue-giron);
+    --foreground: var(--hue-blanc);
+    --surface-1: color-mix(in srgb, var(--hue-noire) 82%, var(--hue-blanc));
+    --surface-2: color-mix(in srgb, var(--hue-noire) 74%, var(--hue-blanc));
+    --surface-3: color-mix(in srgb, var(--hue-noire) 66%, var(--hue-blanc));
+    --muted: color-mix(in srgb, var(--hue-noire) 70%, var(--hue-blanc));
+    --muted-foreground: color-mix(in srgb, var(--hue-blanc) 72%, var(--hue-noire));
+    --border: color-mix(in srgb, var(--hue-noire) 60%, var(--hue-blanc));
+    --input: color-mix(in srgb, var(--hue-noire) 68%, var(--hue-blanc));
+    --accent-soft: color-mix(in srgb, var(--hue-jaune) 16%, var(--hue-noire));
+    --accent-strong: color-mix(in srgb, var(--hue-jaune) 72%, var(--hue-noire));
+    --accent-foreground: var(--hue-noire);
+    --ring: color-mix(in srgb, var(--hue-jaune) 70%, var(--hue-noire));
   }
 }
 
@@ -96,61 +88,60 @@
 html {
   max-width: 100vw;
   background:
-    radial-gradient(60% 50% at 15% 20%, color-mix(in srgb, var(--hue-accent-4) 70%, transparent), transparent 60%),
-    radial-gradient(55% 45% at 80% 15%, color-mix(in srgb, var(--hue-accent-1) 60%, transparent), transparent 55%),
-    radial-gradient(70% 65% at 20% 85%, color-mix(in srgb, var(--hue-accent-3) 65%, transparent), transparent 60%),
-    radial-gradient(60% 55% at 85% 80%, color-mix(in srgb, var(--hue-accent-2) 55%, transparent), transparent 55%),
-    linear-gradient(135deg, var(--background), var(--hue-accent-4));
-    background-size: 140% 140%, 150% 150%, 160% 160%, 150% 150%, 100% 100%;
-    animation: auroraShift 12s ease-in-out infinite;
-  }
-  
-  body {
-    overflow-x: hidden;
-    margin: 0;
-    line-height: 1.5;
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    color: var(--foreground);
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    font-family: var(--font-geist-sans), Helvetica, sans-serif;
-    scrollbar-width: none;
-    background-image:
-      linear-gradient(0deg, color-mix(in srgb, var(--hue-cotext-1) 6%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in srgb, var(--hue-cotext-1) 6%, transparent) 1px, transparent 1px),
-      radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--hue-cotext-1) 12%, transparent) 1px, transparent 1px);
-    background-size: 24px 24px, 24px 24px, 48px 48px;
-    background-position: 0 0, 0 0, 12px 12px;
-  }
-  
-  body::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+    radial-gradient(1200px 900px at 10% -10%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+    radial-gradient(1000px 700px at 90% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%),
+    radial-gradient(900px 650px at 20% 90%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 55%),
+    linear-gradient(180deg, var(--background), color-mix(in srgb, var(--background) 85%, var(--accent) 15%));
+  background-size: 140% 140%, 120% 120%, 120% 120%, 100% 100%;
+  animation: glowShift 4s ease-in-out infinite;
 }
 
-@keyframes auroraShift {
+body {
+  overflow-x: hidden;
+  margin: 0;
+  line-height: 1.5;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--foreground);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-geist-sans), Helvetica, sans-serif;
+  scrollbar-width: none;
+  background-image:
+    linear-gradient(0deg, color-mix(in srgb, var(--border) 25%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 25%, transparent) 1px, transparent 1px),
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--accent) 10%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px, 28px 28px, 56px 56px;
+  background-position: 0 0, 0 0, 12px 12px;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+@keyframes glowShift {
   0% {
-    background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%, 50% 50%;
+    background-position: 0% 0%, 100% 0%, 0% 100%, 50% 50%;
   }
   50% {
-    background-position: 20% 10%, 80% 15%, 10% 85%, 90% 70%, 50% 50%;
+    background-position: 15% 5%, 85% 10%, 10% 85%, 50% 50%;
   }
   100% {
-    background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%, 50% 50%;
+    background-position: 0% 0%, 100% 0%, 0% 100%, 50% 50%;
   }
 }
 
 @media (max-width: 600px) {
   html {
     background:
-      radial-gradient(70% 60% at 30% 25%, color-mix(in srgb, var(--hue-accent-4) 55%, transparent), transparent 65%),
-      radial-gradient(60% 55% at 75% 75%, color-mix(in srgb, var(--hue-accent-2) 45%, transparent), transparent 65%),
-      linear-gradient(135deg, var(--background), var(--hue-accent-4));
-    background-size: 120% 120%, 130% 130%, 100% 100%;
-    animation-duration: 16s;
+      radial-gradient(90% 70% at 25% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+      radial-gradient(85% 70% at 80% 80%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+      linear-gradient(180deg, var(--background), color-mix(in srgb, var(--background) 85%, var(--accent) 15%));
+    background-size: 120% 120%, 120% 120%, 100% 100%;
+    animation-duration: 20s;
   }
 }
 
@@ -193,19 +184,21 @@ button {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  font-family: var(--font-orbitron), var(--font-geist-sans), Helvetica, sans-serif;
   text-transform: uppercase;
-  line-height: 1.25;
-  letter-spacing: -0.5px;
-  color: var(--hue-jaune);
-  font-family: var(--font-orbitron), sans-serif;
 }
+
 h1 {
   margin-bottom: 2rem;
 }
 
 p {
   line-height: 1.7;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
+  color: var(--muted-foreground);
 }
 
 @keyframes pageEnter {

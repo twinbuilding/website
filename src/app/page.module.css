@@ -16,9 +16,36 @@
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
-.main article:first-of-type section img {
+.main article:first-of-type section img:not(.heroLogo) {
   margin: 0 auto;
   width: 75vw;
+}
+
+.heroSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.heroLogo {
+  width: clamp(90px, 22vw, 180px);
+  height: auto;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2));
+}
+
+.heroTitle {
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+
+.heroTail {
+  font-size: clamp(1rem, 2.6vw, 1.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted-foreground);
 }
 
 .testimonialsSection {
@@ -34,7 +61,7 @@
   font-size: 0.85rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--hue-cotext-2);
+  color: var(--accent);
 }
 
 .testimonialsHeading {
@@ -45,7 +72,7 @@
 .testimonialsSubheading {
   max-width: 40rem;
   font-size: 0.95rem;
-  opacity: 0.9;
+  color: var(--muted-foreground);
 }
 
 .testimonialsGrid {
@@ -55,11 +82,11 @@
 }
 
 .testimonialCard {
-  background: var(--hue-opaque-bg);
-  border-radius: var(--bor-radius-lg);
-  box-shadow: var(--box-shadow);
+  background: var(--surface-1);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
   padding: 1.5rem 1.75rem;
-  backdrop-filter: blur(10px);
 }
 
 .testimonialHeader {
@@ -81,13 +108,14 @@
 
 .testimonialRole {
   font-size: 0.9rem;
-  opacity: 0.9;
+  color: var(--muted-foreground);
 }
 
 .testimonialQuote {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.7;
+  color: var(--foreground);
 }
 
 .testimonialSignature {
@@ -95,6 +123,7 @@
   font-size: 0.9rem;
   text-align: right;
   font-style: italic;
+  color: var(--muted-foreground);
 }
 
 .main .text {

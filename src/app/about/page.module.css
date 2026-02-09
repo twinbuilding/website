@@ -11,14 +11,14 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.75rem;
-  color: var(--hue-cotext-1);
+  color: var(--accent);
   margin-bottom: 0.75rem;
 }
 
 .lede {
   font-size: 1.1rem;
   max-width: 720px;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .section {
@@ -32,7 +32,7 @@
 
 .sectionHeader p {
   margin: 0;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .storyGrid {
@@ -44,19 +44,20 @@
 
 .storyCard {
   padding: 1.75rem;
-  border-radius: var(--bor-radius-lg);
-  background: var(--hue-accent-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   color: var(--foreground);
 }
 
 .body {
   margin: 0.6rem 0;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .meta {
   margin: 0.2rem 0 0.8rem;
-  color: var(--hue-cotext-3);
+  color: var(--muted-foreground);
   font-size: 0.9rem;
 }
 
@@ -68,8 +69,9 @@
 
 .statCard {
   padding: 1.5rem;
-  border-radius: var(--bor-radius-md);
-  background: var(--hue-accent-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
   color: var(--foreground);
 }
 
@@ -92,10 +94,10 @@
 
 .certCard {
   padding: 1rem 1.25rem;
-  border-radius: var(--bor-radius);
-  background: var(--hue-accent-3);
-  border: 1px solid var(--hue-accent-4);
-  color: var(--hue-cotext-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
 }
 
 @media (max-width: 900px) {

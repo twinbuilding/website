@@ -11,14 +11,14 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.75rem;
-  color: var(--hue-cotext-1);
+  color: var(--accent);
   margin-bottom: 0.75rem;
 }
 
 .lede {
   font-size: 1.1rem;
   max-width: 720px;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .section {
@@ -32,7 +32,7 @@
 
 .sectionHeader p {
   margin: 0;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .serviceGrid {
@@ -43,20 +43,20 @@
 
 .serviceCard {
   padding: 1.75rem;
-  border-radius: var(--bor-radius-lg);
-  background: var(--hue-accent-3);
-  border: 1px solid var(--hue-accent-4);
-  box-shadow: var(--box-shadow-lg);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
 .serviceCard h3 {
   margin: 0 0 0.75rem;
-  color: var(--hue-cotext-1);
+  color: var(--foreground);
 }
 
 .serviceCard p {
   margin: 0;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .processGrid {
@@ -67,8 +67,9 @@
 
 .processCard {
   padding: 1.5rem;
-  border-radius: var(--bor-radius-md);
-  background: var(--hue-accent-1);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   color: var(--foreground);
 }
 
@@ -80,8 +81,9 @@
 
 .statCard {
   padding: 1.5rem;
-  border-radius: var(--bor-radius-md);
-  background: var(--hue-accent-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
   color: var(--foreground);
 }
 
@@ -106,10 +108,10 @@
 
 .certItem {
   padding: 0.85rem 1rem;
-  border-radius: var(--bor-radius);
-  background: var(--hue-accent-3);
-  border: 1px solid var(--hue-accent-4);
-  color: var(--hue-cotext-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
 }
 
 @media (max-width: 900px) {

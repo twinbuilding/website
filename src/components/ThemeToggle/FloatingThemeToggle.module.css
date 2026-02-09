@@ -8,10 +8,10 @@
 .fab {
   width: 3rem;
   height: 3rem;
-  border-radius: var(--bor-radius-circle);
-  border: 1px solid var(--hue-accent-4);
-  background: color-mix(in srgb, var(--hue-accent-3) 70%, transparent);
-  box-shadow: var(--box-shadow);
+  border-radius: var(--radius-circle);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-sm);
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -20,7 +20,7 @@
 
 .fab:hover {
   transform: translateY(-2px) scale(1.02);
-  background: color-mix(in srgb, var(--hue-accent-4) 70%, transparent);
+  background: var(--surface-3);
 }
 
 .fab:active {
@@ -30,9 +30,9 @@
 .fabIcon {
   width: 18px;
   height: 18px;
-  border-radius: var(--bor-radius-circle);
-  background: conic-gradient(from 90deg, var(--hue-accent-2), var(--hue-accent-1), var(--hue-accent-4));
-  box-shadow: var(--box-shadow-inset);
+  border-radius: var(--radius-circle);
+  background: conic-gradient(from 90deg, var(--accent-soft), var(--accent), var(--surface-2));
+  box-shadow: var(--shadow-inset);
 }
 
 @media (max-width: 600px) {
