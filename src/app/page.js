@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import contents from "@/data/contents.json";
 import Article from "@/components/Article";
+import Testimonial from "@/components/Testimonial";
 
 export default function Home() {
   return (
@@ -20,50 +21,50 @@ export default function Home() {
         </section>
       </article>
 
+      
+
       <article>
         <Article
-          imageUrl="backgrounds/background_1.svg"
-          heading="Engineering the Future"
-          text="At Twin Building, we are dedicated to pushing the boundaries of engineering and technology, creating innovative solutions that shape the future of construction and infrastructure."
+          imageUrl="backgrounds/background_2.png"
+          heading="Engineering Solutions"
+          text="Committed to delivering cutting-edge engineering solutions that drive progress and transform the built environment, ensuring a sustainable and resilient future for generations to come."
           link={{
-            url: "/about",
-            label: "Learn More About Us",
+            url: "/services",
+            label: "Discover Our Solutions",
           }}
         />
       </article>
 
       <article>
-        <section className={styles.testimonialsSection}>
-          <p className={styles.overtitle}>Testimonials</p>
-          <h2 className={styles.testimonialsHeading}>
-          Trusted by owners and project teams
-          </h2>
-          <p className={styles.testimonialsSubheading}>
-          Clients across the {contents.overview.coverage.toLowerCase()} rely on
-          Twin Building for clear engineering, responsive support, and
-          coordinated delivery.
-          </p>
-          <div className={styles.testimonialsGrid}>
-          {contents.testimonials.map((t) => (
-        <figure key={t.name} className={styles.testimonialCard}>
-          <Image
-            src={t.image}
-            alt={t.name}
-            width={160}
-            height={160}
-            className={styles.testimonialAvatar}
-          />
-          <blockquote className={styles.testimonialQuote}>
-          &ldquo;{t.quote}&rdquo;
-          <footer className={styles.testimonialSignature}>
-            &mdash; {t.name}, <span className={styles.testimonialRole}>{t.role}</span>
-          </footer>
-          </blockquote>
-        </figure>
-        ))}
-        </div>
-      </section>
-    </article>
+        <Article
+          imageUrl="backgrounds/background_3.png"
+          heading="Proven Engineering in Practice"
+          text={`With a track record of successful projects across the ${contents.overview.coverage}, Twin Building has consistently delivered innovative engineering solutions that meet the unique challenges of each project, earning the trust of clients and partners alike.`}
+          link={{
+            url: "/projects",
+            label: "Project Portfolio",
+          }}
+        />
+      </article>
+
+      <article>
+        <Testimonial
+          testimonials={contents.testimonials}
+          coverage={contents.overview.coverage}
+        />
+      </article>
+
+    <article>
+        <Article
+          imageUrl="backgrounds/background_1.png"
+          heading="Our Approach to Engineering"
+          text="At Twin Building, we are dedicated to pushing the boundaries of engineering and technology, creating innovative solutions that shape the future of construction and infrastructure."
+          link={{
+            url: "/about",
+            label: "Who We Are",
+          }}
+        />
+      </article>
     </main>
   );
 }

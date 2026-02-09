@@ -109,16 +109,28 @@
 	],
 	"testimonials": [
 		{
-			"name": "Samuel Okoro",
-			"role": "Development Director, Meridian Group",
-			"quote": "Clear documentation, proactive coordination, and on-time delivery.",
-			"image": "/pages/testimonials/1.jpg"
+			"name": "Ma. Clarissa Reyes",
+			"role": "Pediatrician, Private Practice",
+			"quote": "They guided our two-story family home and pool design with clear drawings and practical revisions that kept us on budget.",
+			"image": "/pages/testimonials/clarissa_reyes.jpg"
 		},
 		{
-			"name": "Amina Yusuf",
-			"role": "Project Manager, Westline Estates",
-			"quote": "Their MEP team reduced our energy loads without compromising comfort.",
-			"image": "/pages/testimonials/2.jpg"
+			"name": "Anton Miguel Santos",
+			"role": "Finance Manager, Logistics Firm",
+			"quote": "Our three-story townhouse project moved smoothly because the structural checks and site coordination were meticulous.",
+			"image": "/pages/testimonials/anton_santos.jpg"
+		},
+		{
+			"name": "Lourdes Bautista",
+			"role": "School Administrator",
+			"quote": "From a small piggery upgrade to a compact equipment shed, their team delivered resilient plans with realistic timelines.",
+			"image": "/pages/testimonials/lourdes_bautista.jpg"
+		},
+		{
+			"name": "Rafael Dominguez",
+			"role": "IT Consultant",
+			"quote": "Their structural notes and site checks made our two-story rental units and small pool feel solid and well-coordinated.",
+			"image": "/pages/testimonials/rafael_dominguez.jpg"
 		}
 	],
 	"certifications": [

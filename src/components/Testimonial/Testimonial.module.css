@@ -1,0 +1,96 @@
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.overtitle {
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.heading {
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  margin: 0;
+}
+
+.subheading {
+  max-width: 40rem;
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+}
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 0 0.5rem;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 30s) linear infinite;
+}
+
+.carousel:hover .track {
+  animation-play-state: paused;
+}
+
+.card {
+  width: min(320px, 80vw);
+  background: var(--surface-1);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem 1.75rem;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.75rem;
+}
+
+.quote {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--foreground);
+}
+
+.signature {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  text-align: right;
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+
+.role {
+  color: var(--muted-foreground);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}
