@@ -11,7 +11,7 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.75rem;
-  color: var(--hue-cotext-1);
+  color: var(--accent);
   margin-bottom: 0.75rem;
 }
 
@@ -26,7 +26,7 @@
 
 .sectionHeader p {
   margin: 0;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .storyGrid {
@@ -38,19 +38,20 @@
 
 .storyCard {
   padding: 1.75rem;
-  border-radius: var(--bor-radius-lg);
-  background: var(--hue-accent-1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   color: var(--foreground);
 }
 
 .body {
   margin: 0.6rem 0;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .meta {
   margin: 0.2rem 0 0.8rem;
-  color: var(--hue-cotext-4);
+  color: var(--muted-foreground);
   font-size: 0.9rem;
 }
 
@@ -62,8 +63,9 @@
 
 .statCard {
   padding: 1.5rem;
-  border-radius: var(--bor-radius-md);
-  background: var(--hue-accent-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
   color: var(--foreground);
 }
 
@@ -86,20 +88,20 @@
 
 .certCard {
   padding: 1rem 1.25rem;
-  border-radius: var(--bor-radius);
-  background: var(--hue-accent-3);
-  border: 1px solid var(--hue-accent-4);
-  color: var(--hue-cotext-2);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
 }
 
 .formCard {
   max-width: 700px;
   margin: 0 auto;
   padding: 2rem;
-  border-radius: var(--bor-radius-xl);
-  background: color-mix(in srgb, var(--hue-accent-2) 72%, transparent);
-  border: 1px solid var(--hue-accent-4);
-  box-shadow: var(--box-shadow-lg);
+  border-radius: var(--radius-xl);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
 .docTypeRow {
@@ -110,10 +112,10 @@
 
 .docTypeButton {
   padding: 0.55rem 1rem;
-  border-radius: var(--bor-radius-pill);
-  border: 1px solid var(--hue-accent-4);
-  background: color-mix(in srgb, var(--hue-accent-1) 70%, transparent);
-  color: var(--hue-cotext-1);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  color: var(--foreground);
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease, border 0.2s ease;
@@ -121,12 +123,12 @@
 
 .docTypeButton:hover {
   transform: translateY(-1px);
-  background: color-mix(in srgb, var(--hue-accent-2) 75%, transparent);
+  background: var(--surface-2);
 }
 
 .docTypeButtonActive {
-  border-color: var(--hue-cotext-1);
-  background: color-mix(in srgb, var(--hue-accent-3) 70%, transparent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .formGrid {
@@ -139,32 +141,22 @@
 .inputGroup {
   display: grid;
   gap: 0.5rem;
-  color: var(--hue-cotext-1);
+  color: var(--foreground);
   font-weight: 600;
   padding-bottom: 2rem;
 }
 
 .inputGroup input {
   padding: 0.75rem 0.9rem;
-  border-radius: var(--bor-radius);
-  border: 1px solid var(--hue-accent-4);
-  background: color-mix(in srgb, var(--hue-accent-1) 55%, transparent);
-  color: var(--hue-cotext-1);
-}
-
-:global(:root[data-theme="light"]) .inputGroup input {
-  background: color-mix(in srgb, var(--hue-white) 65%, transparent);
-}
-
-@media (prefers-color-scheme: light) {
-  :global(:root:not([data-theme])) .inputGroup input {
-    background: color-mix(in srgb, var(--hue-white) 65%, transparent);
-  }
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--foreground);
 }
 
 .fileHint {
   font-size: 0.85rem;
-  color: var(--hue-cotext-3);
+  color: var(--muted-foreground);
 }
 
 .autocompleteWrapper {
@@ -177,10 +169,10 @@
   left: 0;
   right: 0;
   margin-top: 0.5rem;
-  background: var(--hue-accent-2);
-  border: 1px solid var(--hue-accent-4);
-  border-radius: var(--bor-radius);
-  box-shadow: var(--box-shadow-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
   max-height: 200px;
   overflow-y: auto;
   z-index: 10;
@@ -194,22 +186,22 @@
   padding: 0.75rem 1rem;
   border: none;
   background: transparent;
-  color: var(--hue-cotext-1);
+  color: var(--foreground);
   cursor: pointer;
   text-align: left;
   transition: background 0.2s ease;
 }
 
 .suggestionItem:hover {
-  background: color-mix(in srgb, var(--hue-accent-3) 65%, transparent);
+  background: var(--surface-3);
 }
 
 .suggestionItem:first-child {
-  border-radius: var(--bor-radius) var(--bor-radius) 0 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
 .suggestionItem:last-child {
-  border-radius: 0 0 var(--bor-radius) var(--bor-radius);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
 
 .suggestionName {
@@ -218,7 +210,7 @@
 
 .suggestionId {
   font-size: 0.85rem;
-  color: var(--hue-cotext-3);
+  color: var(--muted-foreground);
 }
 
 .table {
@@ -238,46 +230,36 @@
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--hue-cotext-3);
+  color: var(--muted-foreground);
 }
 
 .row input {
   padding: 0.65rem 0.8rem;
-  border-radius: var(--bor-radius-sm);
-  border: 1px solid var(--hue-accent-4);
-  background: color-mix(in srgb, var(--hue-accent-1) 55%, transparent);
-  color: var(--hue-cotext-1);
-}
-
-:global(:root[data-theme="light"]) .row input {
-  background: color-mix(in srgb, var(--hue-white) 65%, transparent);
-}
-
-@media (prefers-color-scheme: light) {
-  :global(:root:not([data-theme])) .row input {
-    background: color-mix(in srgb, var(--hue-white) 65%, transparent);
-  }
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--foreground);
 }
 
 .row span {
-  color: var(--hue-cotext-1);
+  color: var(--foreground);
   font-weight: 600;
 }
 
 .removeButton {
   padding: 0.55rem 0.9rem;
-  border-radius: var(--bor-radius-pill);
-  border: 1px solid color-mix(in srgb, var(--hue-accent-4) 65%, transparent);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
   background: transparent;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
   cursor: pointer;
   transition: border 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .removeButton:hover {
   transform: translateY(-1px);
-  color: var(--hue-cotext-1);
-  border-color: var(--hue-cotext-1);
+  color: var(--foreground);
+  border-color: var(--foreground);
 }
 
 .actionRow {
@@ -291,24 +273,24 @@
 
 .addButton {
   padding: 0.65rem 1.2rem;
-  border-radius: var(--bor-radius-pill);
-  border: 1px solid var(--hue-accent-4);
-  background: color-mix(in srgb, var(--hue-accent-3) 65%, transparent);
-  color: var(--hue-cotext-1);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--foreground);
   cursor: pointer;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .addButton:hover {
   transform: translateY(-1px);
-  background: color-mix(in srgb, var(--hue-accent-4) 65%, transparent);
+  background: var(--surface-3);
 }
 
 .totalBox {
   display: grid;
   gap: 0.25rem;
   text-align: right;
-  color: var(--hue-cotext-1);
+  color: var(--foreground);
 }
 
 .totalBox strong {
@@ -318,10 +300,10 @@
 .generateButton {
   width: 100%;
   padding: 0.85rem 1rem;
-  border-radius: var(--bor-radius);
+  border-radius: var(--radius-md);
   border: none;
-  background: var(--hue-cotext-1);
-  color: var(--hue-accent-1);
+  background: var(--accent);
+  color: var(--accent-foreground);
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
@@ -330,7 +312,7 @@
 
 .generateButton:hover {
   transform: translateY(-2px);
-  box-shadow: var(--box-shadow-md);
+  box-shadow: var(--shadow);
 }
 
 @media (max-width: 900px) {

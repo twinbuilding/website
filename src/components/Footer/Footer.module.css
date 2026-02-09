@@ -1,9 +1,9 @@
 .footer {
-  background: var(--hue-accent-1);
+  background: var(--surface-1);
   color: var(--foreground);
   padding: 4rem 2rem 2rem;
   margin-top: 5rem;
-  border-top: 1px solid var(--hue-accent-4);
+  border-top: 1px solid var(--border);
 }
 
 .content {
@@ -17,17 +17,20 @@
 .brand {
   max-width: 380px;
 }
+.brand h3 {
+  font-size: smaller;
+}
 
 .tagline {
   margin: 0 0 1rem;
-  color: var(--hue-cotext-2);
-  font-size: 0.95rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
 }
 
 .address {
   margin: 0;
-  color: var(--hue-cotext-2);
-  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
   line-height: 1.6;
 }
 
@@ -49,7 +52,7 @@
 }
 
 .link {
-  color: var(--hue-cotext-1);
+  color: var(--foreground);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
@@ -60,30 +63,18 @@
 }
 
 .link:hover {
-  color: var(--hue-cotext-4);
-  border-bottom-color: var(--hue-cotext-4);
+  color: var(--accent);
+  border-bottom-color: var(--accent);
   padding-left: 0.25rem;
-}
-
-:global(:root[data-theme="light"]) .link:hover {
-  color: var(--hue-white);
-  border-bottom-color: var(--hue-white);
-}
-
-@media (prefers-color-scheme: light) {
-  :global(:root:not([data-theme])) .link:hover {
-    color: var(--hue-white);
-    border-bottom-color: var(--hue-white);
-  }
 }
 
 .meta {
   max-width: 1200px;
   margin: 2rem auto 0;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--hue-accent-4);
+  border-top: 1px solid var(--border);
   font-size: 0.85rem;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
   text-align: center;
 }
 

@@ -29,6 +29,7 @@ export default function Header() {
             width={50}
             height={50}
           />
+          {contents.website.title.base}
         </Link>
         <button
           type="button"

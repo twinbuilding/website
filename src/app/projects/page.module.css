@@ -11,14 +11,14 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.75rem;
-  color: var(--hue-cotext-1);
+  color: var(--accent);
   margin-bottom: 0.75rem;
 }
 
 .lede {
   font-size: 1.1rem;
   max-width: 720px;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .section {
@@ -36,7 +36,7 @@
 
 .sectionHeader p {
   margin: 0;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .projectGrid {
@@ -46,29 +46,28 @@
 }
 
 .projectCard {
-  background: color-mix(in srgb, var(--hue-accent-3) 85%, transparent);
-  border: 1px solid var(--hue-accent-4);
-  border-radius: var(--bor-radius-lg);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
-  box-shadow: var(--box-shadow-lg);
-  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow);
 }
 
 .projectCard h3 {
   margin: 0.75rem 0 0.5rem;
-  color: var(--hue-cotext-1);
+  color: var(--foreground);
 }
 
 .projectCard p {
   margin: 0.35rem 0;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .projectImage {
   width: 100%;
   height: 200px;
-  border-radius: var(--bor-radius);
-  background: linear-gradient(135deg, var(--hue-slate), var(--hue-steel), var(--hue-iblue));
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent-soft), var(--surface-2), var(--surface-3));
   position: relative;
   overflow: hidden;
 }
@@ -77,12 +76,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 20% 20%, rgba(242, 242, 242, 0.4), transparent 55%);
+  background: radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 55%);
 }
 
 .projectMeta {
   font-size: 0.9rem;
-  color: var(--hue-cotext-4);
+  color: var(--muted-foreground);
 }
 
 .statsGrid {
@@ -93,10 +92,11 @@
 
 .statCard {
   padding: 1.5rem;
-  border-radius: var(--bor-radius-md);
-  background: var(--hue-accent-1);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   color: var(--foreground);
-  box-shadow: var(--box-shadow-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .statValue {
@@ -119,20 +119,20 @@
 .testimonialCard {
   margin: 0;
   padding: 1.75rem;
-  border-radius: var(--bor-radius-lg);
-  background: var(--hue-accent-3);
-  border: 1px solid var(--hue-accent-4);
-  box-shadow: var(--box-shadow-lg);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
 .testimonialCard p {
   margin: 0 0 1rem;
-  color: var(--hue-cotext-2);
+  color: var(--muted-foreground);
 }
 
 .testimonialFooter {
   font-size: 0.9rem;
-  color: var(--hue-cotext-4);
+  color: var(--accent-strong);
 }
 
 @media (max-width: 900px) {
