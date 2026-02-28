@@ -17,6 +17,7 @@ export default function GeneratePage() {
 	const [customerName, setCustomerName] = useState("");
 	const [customerId, setCustomerId] = useState("-");
 	const [customerTitle, setCustomerTitle] = useState("");
+	const [location, setLocation] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const customerAutocompleteRef = useRef(null);
 	const [quoteDate, setQuoteDate] = useState(new Date().toISOString().split("T")[0]);
@@ -197,6 +198,7 @@ export default function GeneratePage() {
 			customerName,
 			customerId,
 			customerTitle,
+			location,
 			quoteDate,
 			items,
 			totals: calculateTotals(items, downpaymentType, downpaymentValue),
@@ -215,6 +217,7 @@ export default function GeneratePage() {
 			customerName,
 			customerId,
 			customerTitle,
+			location,
 			quoteDate,
 			items,
 			downpaymentType,
@@ -233,6 +236,7 @@ export default function GeneratePage() {
 			setCustomerName(data.customerName || "");
 			setCustomerId(data.customerId || "-");
 			setCustomerTitle(data.customerTitle || "");
+			setLocation(data.location || "");
 			setQuoteDate(data.quoteDate || new Date().toISOString().split("T")[0]);
 			setItems(Array.isArray(data.items) && data.items.length > 0 ? data.items : [createItem(0)]);
 			setDocSuffix(normalizeSuffix(data.suffix || data.docSuffix || "A1"));
@@ -270,6 +274,7 @@ export default function GeneratePage() {
 		if (!customerName.trim()) return false;
 		if (!quoteDate) return false;
 		if (!clientIdInput.trim()) return false;
+		if (!location.trim()) return false;
 		if (docType === "quotation") {
 			return items.some(item => item.description.trim());
 		}
@@ -380,6 +385,12 @@ export default function GeneratePage() {
 			: `CLIENT: ${namePart}`;
 		doc.text(formattedName, rightX, rightY, { align: "right" });
 		rightY += 14;
+		// Add location below CLIENT
+		const locationText = (payloadData.location || "").trim();
+		if (locationText) {
+			doc.text(`LOCATION: ${locationText}`, rightX, rightY, { align: "right" });
+			rightY += 14;
+		}
 		doc.text(
 			payloadData.docType === "invoice" ? (payloadData.sourceDocNumber || "-") : (payloadData.docNumber || "-"),
 			rightX,
@@ -771,6 +782,17 @@ export default function GeneratePage() {
 													<option value="Prof." />
 													<option value="Atty." />
 												</datalist>
+											</label>
+											<label className={styles.inputGroup}>
+												<span>Location</span>
+												<input
+													type="text"
+													value={location}
+													onChange={(e) => setLocation(e.target.value)}
+													placeholder="Project location"
+													required
+													className={attemptedSubmit && !location.trim() ? styles.inputError : ""}
+												/>
 											</label>
 											<label className={styles.inputGroup}>
 												<span>Date</span>
