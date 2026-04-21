@@ -11,9 +11,10 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 3rem;
   max-width: 1200px;
+  border-top: 2px solid var(--hue-jaune);
   border-radius: 0 0 .25rem 0;
   margin: 0 auto 3rem;
-  background-image: url(/backgrounds/background_5.png);
+  background-image: url(/backgrounds/footer_scaffolding.png);
   background-size: cover;
   background-position: center right;
   background-repeat: no-repeat;
