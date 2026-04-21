@@ -36,6 +36,7 @@ export default function GeneratePage() {
 	const [previewError, setPreviewError] = useState("");
 	const [isPreviewing, setIsPreviewing] = useState(false);
 	const [attemptedSubmit, setAttemptedSubmit] = useState(false);
+	const [generateError, setGenerateError] = useState("");
 	const attemptedSubmitRef = useRef(null);
 
 	const formatLongDate = (dateString) => {
@@ -284,6 +285,22 @@ export default function GeneratePage() {
 		}
 		return true;
 	};
+
+	const canGenerate = useMemo(() => isFormValid(), [
+		customerName,
+		quoteDate,
+		clientIdInput,
+		location,
+		items,
+		docType,
+		invoiceData,
+	]);
+
+	useEffect(() => {
+		if (canGenerate && generateError) {
+			setGenerateError("");
+		}
+	}, [canGenerate, generateError]);
 
 	const loadImageForPdf = (src, maxWidth = 800, quality = 0.85) => {
 		return new Promise((resolve, reject) => {
@@ -674,20 +691,25 @@ export default function GeneratePage() {
 	}, [previewUrl]);
 
 	const handleGenerate = async () => {
-		if (!isFormValid()) {
-			// Trigger the visual error state
+		if (!canGenerate) {
 			setAttemptedSubmit(true);
+			setGenerateError(
+				docType === "invoice" && !invoiceData
+					? "Upload a quotation JSON file before generating an invoice."
+					: "Complete all required fields before generating."
+			);
 
-			// Optional: Reset the flashing effect after 1.5s
 			if (attemptedSubmitRef.current) clearTimeout(attemptedSubmitRef.current);
 			attemptedSubmitRef.current = setTimeout(() => {
 				setAttemptedSubmit(false);
 			}, 1500);
-			
-			return; // Stop the PDF generation
-		}	
+
+			return;
+		}
+
+		setGenerateError("");
 		if (docType === "invoice" && !invoiceData) {
-			alert("Upload a quotation JSON file before generating the invoice.");
+			setGenerateError("Upload a quotation JSON file before generating an invoice.");
 			return;
 		}
 		const freshPayload = buildPayload();
@@ -991,9 +1013,15 @@ export default function GeneratePage() {
 									</label>
 								)}
 
-								<button type="button" className={styles.generateButton} onClick={handleGenerate} disabled={!isFormValid()}>
+								<button
+									type="button"
+									className={`${styles.generateButton} ${canGenerate ? styles.generateButtonReady : ""}`}
+									onClick={handleGenerate}
+									aria-disabled={!canGenerate}
+								>
 									Generate
 								</button>
+								{generateError && <p className={styles.generateError}>{generateError}</p>}
 							</div>
 						</div>
 
