@@ -1,6 +1,6 @@
-import Link from "next/link";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Button from "@/components/Button";
 import contents from "@/data/contents.json";
 import styles from "./page.module.css";
 
@@ -15,6 +15,14 @@ export default function Contact() {
                     <p className={styles.kicker}>Let us collaborate</p>
                     <h1>Contact</h1>
                     <p className={styles.lede}>{overview.summary}</p>
+                    <div className={styles.heroActions}>
+                        <Button href={`mailto:${website.email}`} className={styles.heroButton} variant="soft" size="md">
+                            Email Us
+                        </Button>
+                        <Button href={`tel:${author.contact}`} className={styles.heroButton} variant="solid" size="md">
+                            Call Now
+                        </Button>
+                    </div>
                 </section>
 
                 <section className={styles.section}>
@@ -27,10 +35,14 @@ export default function Contact() {
                         <div className={styles.card}>
                             <h2>Reach Us</h2>
                             <p className={styles.body}>
-                                <Link href={`mailto:${website.email}`}>{website.email}</Link>
+                                <Button href={`mailto:${website.email}`} className={styles.inlineButton} variant="ghost" size="sm">
+                                    {website.email}
+                                </Button>
                             </p>
                             <p className={styles.body}>
-                                <Link href={`tel:${author.contact}`}>{author.contact}</Link>
+                                <Button href={`tel:${author.contact}`} className={styles.inlineButton} variant="ghost" size="sm">
+                                    {author.contact}
+                                </Button>
                             </p>
                             {/* <p className={styles.meta}>Emergency: {website.emergency}</p> */}
                         </div>
@@ -38,7 +50,9 @@ export default function Contact() {
                             <h2>Lead Engineer</h2>
                             <p className={styles.body}>{author.name.full}</p>
                             <p className={styles.body}>
-                                <Link href={`mailto:${author.email}`}>{author.email}</Link>
+                                <Button href={`mailto:${author.email}`} className={styles.inlineButton} variant="ghost" size="sm">
+                                    {author.email}
+                                </Button>
                             </p>
                             {/* <p className={styles.meta}>Direct line: {author.contact}</p> */}
                         </div>

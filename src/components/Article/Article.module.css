@@ -13,7 +13,7 @@
 .overlay {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(135deg, color-mix(in srgb, var(--background) 70%, transparent), color-mix(in srgb, var(--background) 20%, transparent));
+	background: linear-gradient(135deg, color-mix(in srgb, var(--background) 10%, transparent), color-mix(in srgb, var(--background) 0%, transparent));
 	z-index: 1;
 }
 
@@ -43,16 +43,10 @@
 .link {
 	display: inline-block;
 	padding: 0.75rem 2rem;
-	background: var(--accent);
-	color: var(--accent-foreground);
-	font-weight: 600;
 	text-decoration: none;
-	border-radius: var(--radius-pill);
-	transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .link:hover {
-	transform: translateY(-2px);
 	opacity: 0.9;
 }
 

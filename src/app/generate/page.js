@@ -8,6 +8,7 @@ import business from "@/data/business.json";
 import styles from "./page.module.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Button from "@/components/Button";
 
 const PREVIEW_DEBOUNCE_MS = 800;
 const createItem = (id) => ({ id, description: "", quantity: 1, price: 0 });
@@ -712,20 +713,26 @@ export default function GeneratePage() {
 						<div className={styles.formPane}>
 							<div className={styles.formCard} suppressHydrationWarning>
 								<div className={styles.docTypeRow}>
-									<button
+									<Button
 										type="button"
+										variant="soft"
+										size="sm"
+										active={docType === "quotation"}
 										className={`${styles.docTypeButton} ${docType === "quotation" ? styles.docTypeButtonActive : ""}`}
 										onClick={() => setDocType("quotation")}
 									>
 										Quotation
-									</button>
-									<button
+									</Button>
+									<Button
 										type="button"
+										variant="soft"
+										size="sm"
+										active={docType === "invoice"}
 										className={`${styles.docTypeButton} ${docType === "invoice" ? styles.docTypeButtonActive : ""}`}
 										onClick={() => setDocType("invoice")}
 									>
 										Invoice
-									</button>
+									</Button>
 								</div>
 
 								{docType === "quotation" && (
@@ -748,15 +755,17 @@ export default function GeneratePage() {
 													{showSuggestions && filteredCustomers.length > 0 && (
 														<div className={styles.suggestions}>
 															{filteredCustomers.map((customer) => (
-																<button
+																<Button
 																	key={customer.id}
 																	type="button"
+																	variant="ghost"
+																	size="sm"
 																	className={styles.suggestionItem}
 																	onClick={() => selectCustomer(customer)}
 																>
 																	<span className={styles.suggestionName}>{formatCustomerDisplay(customer)}</span>
 																	<span className={styles.suggestionId}>ID: {customer.id}</span>
-																</button>
+																</Button>
 															))}
 														</div>
 													)}
@@ -884,15 +893,17 @@ export default function GeneratePage() {
 														{showItemSuggestions[index] && getFilteredServices(index).length > 0 && (
 															<div className={styles.suggestions}>
 																{getFilteredServices(index).map((service) => (
-																	<button
+																	<Button
 																		key={service.id}
 																		type="button"
+																		variant="ghost"
+																		size="sm"
 																		className={styles.suggestionItem}
 																		onMouseDown={() => selectService(index, service)}
 																	>
 																		<span className={styles.suggestionName}>{service.name}</span>
 																		<span className={styles.suggestionId}>PHP {service.price.toFixed(2)}</span>
-																	</button>
+																	</Button>
 																))}
 															</div>
 														)}
@@ -915,22 +926,24 @@ export default function GeneratePage() {
 															}
 														}}
 													/>
-													<button
+													<Button
 														type="button"
+														variant="ghost"
+														size="sm"
 														className={styles.removeButton}
 														onClick={() => removeItem(index)}
 														aria-label="Remove item"
 													>
 														x
-													</button>
+													</Button>
 												</div>
 											))}
 										</div>
 
 										<div className={styles.actionRow}>
-											<button type="button" className={styles.addButton} onClick={addItem}>
+											<Button type="button" variant="soft" size="sm" className={styles.addButton} onClick={addItem}>
 												Add item
-											</button>
+											</Button>
 											<div className={styles.totalBox}>
 												<span>Grand total</span>
 												<strong>{formatCurrency(totals.grandTotal)}</strong>

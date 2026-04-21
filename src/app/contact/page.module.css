@@ -21,6 +21,17 @@
   color: var(--muted-foreground);
 }
 
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+}
+
+.heroButton {
+  min-width: 9.5rem;
+}
+
 .section {
   max-width: 1100px;
   margin: 0 auto 3.5rem;
@@ -52,6 +63,15 @@
 .body {
   margin: 0.4rem 0;
   color: var(--muted-foreground);
+}
+
+.inlineButton {
+  --btn-bg: transparent;
+  --btn-fg: var(--foreground);
+  --btn-border: color-mix(in srgb, var(--border) 70%, transparent);
+  --btn-light: color-mix(in srgb, var(--accent) 45%, var(--foreground));
+  padding-left: 0.65rem;
+  padding-right: 0.65rem;
 }
 
 .meta {

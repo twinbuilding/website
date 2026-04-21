@@ -1,0 +1,73 @@
+.arrowButton {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1rem, 3vh, 2rem);
+  transform: translateX(-50%);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  background: color-mix(in srgb, var(--background) 85%, transparent);
+  backdrop-filter: blur(4px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground);
+  box-shadow: var(--shadow-sm);
+  z-index: 3;
+  animation: arrowFloat 1.7s ease-in-out infinite;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.arrowButtonUp {
+  animation-name: arrowFloatUp;
+}
+
+.arrowButton:hover {
+  transform: translateX(-50%) translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+  box-shadow: var(--shadow);
+}
+
+.arrowButton:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.chevron {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.arrowButtonUp .chevron {
+  transform: rotate(-135deg);
+}
+
+@keyframes arrowFloat {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+@keyframes arrowFloatUp {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrowButton {
+    animation: none;
+  }
+}
