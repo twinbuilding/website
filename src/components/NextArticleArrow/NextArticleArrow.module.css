@@ -1,4 +1,6 @@
 .arrowButton {
+  --arrow-pinpoint-color: color-mix(in srgb, var(--accent) 45%, white);
+
   position: absolute;
   left: 50%;
   bottom: clamp(1rem, 3vh, 2rem);
@@ -17,6 +19,24 @@
   z-index: 3;
   animation: arrowFloat 1.7s ease-in-out infinite;
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.arrowButton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--arrow-pinpoint-color);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--arrow-pinpoint-color) 75%, transparent);
+  offset-path: inset(-3px round 999px);
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  pointer-events: none;
+  z-index: 1;
+  animation: borderPinpoint 3s linear infinite;
 }
 
 .arrowButtonUp {
@@ -66,8 +86,18 @@
   }
 }
 
+@keyframes borderPinpoint {
+  to {
+    offset-distance: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .arrowButton {
+    animation: none;
+  }
+
+  .arrowButton::after {
     animation: none;
   }
 }
