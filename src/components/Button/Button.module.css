@@ -20,7 +20,7 @@
   line-height: 1.1;
   cursor: pointer;
   isolation: isolate;
-  overflow: visible;
+  overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
@@ -48,19 +48,20 @@
 .button::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 5px;
-  height: 5px;
-  border-radius: 999px;
-  background: var(--btn-pinpoint-color);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--btn-pinpoint-color) 75%, transparent);
-  offset-path: inset(-3px round calc(var(--btn-radius) + 3px));
-  offset-distance: 0%;
-  offset-rotate: 0deg;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    transparent 44%,
+    color-mix(in srgb, var(--btn-pinpoint-color) 28%, transparent) 50%,
+    transparent 56%,
+    transparent 100%
+  );
+  transform: translateX(-130%);
+  opacity: 0.32;
   pointer-events: none;
-  z-index: 2;
-  animation: borderPinpoint 3.4s linear infinite;
+  z-index: 0;
+  animation: buttonShimmer 5.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .noBorderLight::after {
@@ -109,9 +110,17 @@
   --btn-border: var(--accent);
 }
 
-@keyframes borderPinpoint {
-  to {
-    offset-distance: 100%;
+@keyframes buttonShimmer {
+  0% {
+    transform: translateX(-130%);
+  }
+
+  45% {
+    transform: translateX(130%);
+  }
+
+  100% {
+    transform: translateX(130%);
   }
 }
 

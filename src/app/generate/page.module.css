@@ -319,21 +319,35 @@ select.inputError {
 }
 
 .generateButton {
-  --btn-bg: var(--accent);
-  --btn-fg: var(--accent-foreground);
-  --btn-border: color-mix(in srgb, var(--accent) 50%, var(--border));
-  --btn-light: color-mix(in srgb, var(--accent) 85%, white);
-  --btn-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   width: 100%;
+  padding: 0.75rem 0;
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.generateButtonReady {
+  background: var(--hue-jaune);
+  color: var(--hue-noire);
+  border-color: color-mix(in srgb, var(--hue-jaune) 60%, var(--hue-noire));
 }
 
 .generateButton:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
+}
+
+.generateError {
+  margin-top: 0.75rem;
+  color: color-mix(in srgb, #ef4444 72%, var(--foreground));
+  font-size: 0.85rem;
+  line-height: 1.4;
 }
 
 @media (max-width: 1065px) {
