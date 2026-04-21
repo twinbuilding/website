@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import contents from "@/data/contents.json";
 import Article from "@/components/Article";
 import Testimonial from "@/components/Testimonial";
+import NextArticleArrow from "@/components/NextArticleArrow";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
           <h1 className={styles.heroTitle}>{contents.website.title.base}</h1>
           <p className={styles.heroTail}>{contents.website.title.tail}</p>
         </section>
+        <NextArticleArrow />
       </article>
 
       
@@ -33,6 +35,7 @@ export default function Home() {
             label: "Discover Our Solutions",
           }}
         />
+        <NextArticleArrow />
       </article>
 
       <article>
@@ -45,6 +48,7 @@ export default function Home() {
             label: "Project Portfolio",
           }}
         />
+        <NextArticleArrow />
       </article>
 
       <article>
@@ -52,6 +56,7 @@ export default function Home() {
           testimonials={contents.testimonials}
           coverage={contents.overview.coverage}
         />
+        <NextArticleArrow />
       </article>
 
     <article>
@@ -64,6 +69,7 @@ export default function Home() {
             label: "Who We Are",
           }}
         />
+        <NextArticleArrow direction="up" />
       </article>
     </main>
   );
