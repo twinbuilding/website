@@ -98,24 +98,16 @@
 }
 
 .docTypeButton {
-  padding: 0.55rem 1rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border);
-  background: var(--surface-1);
-  color: var(--foreground);
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, border 0.2s ease;
-}
-
-.docTypeButton:hover {
-  transform: translateY(-1px);
-  background: var(--surface-2);
+  --btn-bg: var(--surface-1);
+  --btn-fg: var(--foreground);
+  --btn-border: var(--border);
+  --btn-light: color-mix(in srgb, var(--accent) 45%, var(--foreground));
+  min-width: 8.5rem;
 }
 
 .docTypeButtonActive {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+  --btn-bg: var(--accent-soft);
+  --btn-border: var(--accent);
 }
 
 .formGrid {
@@ -173,17 +165,18 @@
 }
 
 .suggestionItem {
+  --btn-bg: transparent;
+  --btn-fg: var(--foreground);
+  --btn-border: transparent;
+  --btn-light: color-mix(in srgb, var(--accent) 55%, var(--foreground));
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 0.75rem 1rem;
-  border: none;
-  background: transparent;
-  color: var(--foreground);
-  cursor: pointer;
+  box-shadow: none;
+  border-radius: 0;
   text-align: left;
-  transition: background 0.2s ease;
 }
 
 .suggestionItem:hover {
@@ -242,33 +235,27 @@
 }
 
 .removeButton {
+  --btn-bg: transparent;
+  --btn-fg: var(--muted-foreground);
+  --btn-border: var(--border);
+  --btn-light: color-mix(in srgb, var(--foreground) 55%, transparent);
   width: 2.25rem;
   height: 2.25rem;
   padding: 0;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--muted-foreground);
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: border 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .removeButton:hover {
-  transform: translateY(-1px);
-  color: var(--foreground);
-  border-color: var(--foreground);
+  --btn-fg: var(--foreground);
+  --btn-border: var(--foreground);
   background: var(--surface-3);
 }
 
 .removeButton:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--ring);
+  box-shadow: none;
 }
 
 .actionRow {
@@ -281,25 +268,19 @@
 }
 
 .addButton {
-  padding: 0.55rem 1rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border);
-  background: var(--surface-1);
-  color: var(--foreground);
-  font-weight: 600;
+  --btn-bg: var(--surface-1);
+  --btn-fg: var(--foreground);
+  --btn-border: var(--border);
+  --btn-light: color-mix(in srgb, var(--accent) 45%, var(--foreground));
   line-height: 1.1;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, border 0.2s ease;
 }
 
 .addButton:hover {
-  transform: translateY(-1px);
   background: var(--surface-2);
 }
 
 .addButton:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--ring);
+  box-shadow: none;
 }
 
 .totalBox {
@@ -314,21 +295,14 @@
 }
 
 .generateButton {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-foreground);
+  --btn-border: color-mix(in srgb, var(--accent) 50%, var(--border));
+  --btn-light: color-mix(in srgb, var(--accent) 85%, white);
+  --btn-radius: var(--radius-md);
   width: 100%;
-  padding: 0.85rem 1rem;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--accent);
-  color: var(--accent-foreground);
   font-weight: 700;
   font-size: 1rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.generateButton:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
 }
 
 @media (max-width: 1065px) {

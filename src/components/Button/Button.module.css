@@ -1,0 +1,130 @@
+.button {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-foreground);
+  --btn-border: color-mix(in srgb, var(--accent) 50%, var(--border));
+  --btn-light: var(--accent);
+  --btn-pinpoint-color: color-mix(in srgb, var(--btn-light) 88%, white);
+  --btn-radius: var(--radius-pill);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: var(--btn-radius);
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  text-decoration: none;
+  font-weight: 650;
+  line-height: 1.1;
+  cursor: pointer;
+  isolation: isolate;
+  overflow: visible;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--btn-pinpoint-color);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--btn-pinpoint-color) 75%, transparent);
+  offset-path: inset(-3px round calc(var(--btn-radius) + 3px));
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  pointer-events: none;
+  z-index: 2;
+  animation: borderPinpoint 3.4s linear infinite;
+}
+
+.noBorderLight::after {
+  display: none;
+}
+
+.variantSolid {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-foreground);
+  --btn-border: color-mix(in srgb, var(--accent) 50%, var(--border));
+  --btn-light: var(--accent);
+  --btn-pinpoint-color: var(--foreground);
+}
+
+.variantSoft {
+  --btn-bg: color-mix(in srgb, var(--surface-2) 94%, transparent);
+  --btn-fg: var(--foreground);
+  --btn-border: var(--border);
+  --btn-light: color-mix(in srgb, var(--foreground) 35%, var(--accent));
+}
+
+.variantGhost {
+  --btn-bg: transparent;
+  --btn-fg: var(--foreground);
+  --btn-border: color-mix(in srgb, var(--border) 75%, transparent);
+  --btn-light: color-mix(in srgb, var(--accent) 45%, var(--foreground));
+}
+
+.sizeSm {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.sizeMd {
+  padding: 0.75rem 1.35rem;
+  font-size: 0.95rem;
+}
+
+.sizeLg {
+  padding: 0.9rem 1.6rem;
+  font-size: 1rem;
+}
+
+.isActive {
+  --btn-bg: var(--accent-soft);
+  --btn-border: var(--accent);
+}
+
+@keyframes borderPinpoint {
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:hover {
+    transform: none;
+  }
+
+  .button::after {
+    animation: none;
+  }
+}

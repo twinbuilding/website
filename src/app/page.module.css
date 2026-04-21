@@ -74,6 +74,18 @@
   color: var(--muted-foreground);
 }
 
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.heroButton {
+  min-width: 10.5rem;
+}
+
 
 .main .text {
   text-align: center;

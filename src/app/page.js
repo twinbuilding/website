@@ -4,6 +4,7 @@ import contents from "@/data/contents.json";
 import Article from "@/components/Article";
 import Testimonial from "@/components/Testimonial";
 import NextArticleArrow from "@/components/NextArticleArrow";
+import Button from "@/components/Button";
 
 export default function Home() {
   return (
@@ -29,6 +30,14 @@ export default function Home() {
           />
           <h1 className={styles.heroTitle}>{contents.website.title.base}</h1>
           <p className={styles.heroTail}>{contents.website.title.tail}</p>
+          <div className={styles.heroActions}>
+            <Button href="/services" className={styles.heroButton} variant="soft" size="md">
+              Our Services
+            </Button>
+            <Button href="/contact" className={styles.heroButton} variant="solid" size="md">
+              Contact Us
+            </Button>
+          </div>
         </section>
         <NextArticleArrow />
       </article>

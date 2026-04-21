@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Button from "@/components/Button";
 import contents from "@/data/contents.json";
 import styles from "./page.module.css";
 
@@ -14,6 +15,14 @@ export default function About() {
                     <p className={styles.kicker}>Who we are</p>
                     <h1>About</h1>
                     <p className={styles.lede}>{overview.summary}</p>
+                    <div className={styles.heroActions}>
+                        <Button href="/projects" className={styles.heroButton} variant="soft" size="md">
+                            View Projects
+                        </Button>
+                        <Button href="/contact" className={styles.heroButton} variant="solid" size="md">
+                            Start a Conversation
+                        </Button>
+                    </div>
                 </section>
 
                 <section className={styles.section}>

@@ -1,5 +1,5 @@
 import styles from "./Article.module.css";
-import Link from "next/link";
+import Button from "@/components/Button";
 
 export default function Article({ data, imageUrl, heading, text, link }) {
 	// Support both a `data` object and direct props; direct props win if provided.
@@ -19,9 +19,9 @@ export default function Article({ data, imageUrl, heading, text, link }) {
 				{finalHeading && <h1 className={styles.heading}>{finalHeading}</h1>}
 				{finalText && <p className={styles.text}>{finalText}</p>}
 				{finalLink && (
-					<Link href={finalLink.url} className={styles.link}>
+					<Button href={finalLink.url} className={styles.link} variant="solid" size="md">
 						{finalLink.label}
-					</Link>
+					</Button>
 				)}
 			</div>
 		</section>
