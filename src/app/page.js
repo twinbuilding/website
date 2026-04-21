@@ -12,7 +12,7 @@ export default function Home() {
       <article className={styles.heroArticle}>
         <video
           className={styles.heroBackgroundVideo}
-          src="/backgrounds/background_0.mp4"
+          src="/backgrounds/home_hero.mp4"
           autoPlay
           loop
           muted
@@ -46,7 +46,7 @@ export default function Home() {
 
       <article>
         <Article
-          imageUrl="backgrounds/background_2.png"
+          imageUrl="backgrounds/article_engineering_solutions.png"
           heading="Engineering Solutions"
           text="Committed to delivering cutting-edge engineering solutions that drive progress and transform the built environment, ensuring a sustainable and resilient future for generations to come."
           link={{
@@ -59,7 +59,7 @@ export default function Home() {
 
       <article>
         <Article
-          imageUrl="backgrounds/background_3.png"
+          imageUrl="backgrounds/article_proven_engineering.png"
           heading="Proven Engineering in Practice"
           text={`With a track record of successful projects across the ${contents.overview.coverage}, Twin Building has consistently delivered innovative engineering solutions that meet the unique challenges of each project, earning the trust of clients and partners alike.`}
           link={{
@@ -80,7 +80,7 @@ export default function Home() {
 
     <article>
         <Article
-          imageUrl="backgrounds/background_1.png"
+          imageUrl="backgrounds/article_our_approach.png"
           heading="Our Approach to Engineering"
           text="At Twin Building, we are dedicated to pushing the boundaries of engineering and technology, creating innovative solutions that shape the future of construction and infrastructure."
           link={{
