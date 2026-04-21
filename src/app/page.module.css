@@ -28,6 +28,31 @@
   align-items: center;
   gap: 1rem;
   text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.heroArticle {
+  overflow: hidden;
+}
+
+.heroBackgroundVideo {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: auto;
+  min-width: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: var(--background);
+  opacity: 0.75;
+  z-index: 1;
 }
 
 .heroLogo {

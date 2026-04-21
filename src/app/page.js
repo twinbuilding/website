@@ -8,7 +8,17 @@ import NextArticleArrow from "@/components/NextArticleArrow";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <article>
+      <article className={styles.heroArticle}>
+        <video
+          className={styles.heroBackgroundVideo}
+          src="/backgrounds/background_0.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
+        />
+        <div className={styles.heroOverlay} aria-hidden="true" />
         <section className={styles.heroSection}>
           <Image
             src={`${contents.website.logo}`}
