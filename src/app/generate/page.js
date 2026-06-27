@@ -37,7 +37,36 @@ export default function GeneratePage() {
 	const [isPreviewing, setIsPreviewing] = useState(false);
 	const [attemptedSubmit, setAttemptedSubmit] = useState(false);
 	const [generateError, setGenerateError] = useState("");
+	const [isUnlocked, setIsUnlocked] = useState(false);
+	const [passwordInput, setPasswordInput] = useState("");
+	const [passwordError, setPasswordError] = useState("");
 	const attemptedSubmitRef = useRef(null);
+
+	const LOCK_PAGE_PASSWORD = "TrentProtector";
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const stored = window.localStorage.getItem("generatePageUnlocked");
+		if (stored === "true") {
+			setIsUnlocked(true);
+		}
+	}, []);
+
+	const handleUnlockSubmit = (event) => {
+		event.preventDefault();
+		if (passwordInput === LOCK_PAGE_PASSWORD) {
+			setIsUnlocked(true);
+			window.localStorage.setItem("generatePageUnlocked", "true");
+			setPasswordError("");
+			return;
+		}
+		setPasswordError("Incorrect password. Please try again.");
+	};
+
+	const handlePasswordChange = (event) => {
+		setPasswordInput(event.target.value);
+		if (passwordError) setPasswordError("");
+	};
 
 	const formatLongDate = (dateString) => {
 		if (!dateString) return "";
@@ -724,6 +753,33 @@ export default function GeneratePage() {
 		const safeDocNumber = (freshPayload.docNumber || "document").replace(/[^a-z0-9-]/gi, "_");
 		doc.save(`${safeDocNumber}.pdf`);
 	};
+
+	if (!isUnlocked) {
+		return (
+			<>
+				<main className={`${styles.main} ${styles.lockMain}`}>
+					<div className={styles.lockCard}>
+						<h1>Protected access</h1>
+						<p>Please enter the password to access the generator.</p>
+						<form className={styles.lockForm} onSubmit={handleUnlockSubmit}>
+							<label>
+								<span>Password</span>
+								<input
+									type="password"
+									value={passwordInput}
+									onChange={handlePasswordChange}
+									autoFocus
+									aria-label="Enter password to unlock generator"
+								/>
+							</label>
+							<button type="submit" className={`${styles.generateButton} ${styles.generateButtonReady}`}>Unlock</button>
+							{passwordError && <p className={styles.lockError}>{passwordError}</p>}
+						</form>
+					</div>
+				</main>
+			</>
+		);
+	}
 
 	return (
 		<>

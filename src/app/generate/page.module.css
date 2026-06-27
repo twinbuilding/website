@@ -350,6 +350,68 @@ select.inputError {
   line-height: 1.4;
 }
 
+.lockMain {
+  display: grid;
+  min-height: calc(100vh - 5rem);
+  place-items: center;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.lockCard {
+  width: min(480px, 100%);
+  padding: 2.5rem;
+  border-radius: var(--radius-xl);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.lockCard h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.lockCard p {
+  margin: 0 0 1.5rem;
+  color: var(--muted-foreground);
+}
+
+.lockForm {
+  display: grid;
+  gap: 1rem;
+}
+
+.lockForm label {
+  display: grid;
+  gap: 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.lockForm input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--foreground);
+}
+
+.lockError {
+  margin: 0;
+  color: #ef4444;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .lockCard {
+    padding: 1.75rem;
+  }
+}
+
 @media (max-width: 1065px) {
   .main {
     padding: 3rem 1.25rem 4rem;
