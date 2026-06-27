@@ -26,17 +26,17 @@
 			{
 				"bank": "GCash",
 				"number": "09107420467",
-                "icon": "gcash.png"
+                "icon": "gcash.svg"
 			},
 			{
 				"bank": "Security Bank",
 				"number": "0000079357716",
-                "icon": "sec.png"
+                "icon": "sec.svg"
 			},
 			{
 				"bank": "MariBank",
 				"number": "1230 9753 502",
-                "icon": "maribank.png"
+                "icon": "maribank.svg"
 			}
 		]
 	},

@@ -302,7 +302,7 @@ export default function GeneratePage() {
 		}
 	}, [canGenerate, generateError]);
 
-	const loadImageForPdf = (src, maxWidth = 800, quality = 0.85) => {
+	const loadImageForPdf = (src, maxWidth = 800, quality = 0.85, outputFormat = "JPEG") => {
 		return new Promise((resolve, reject) => {
 			const img = new Image();
 			img.crossOrigin = "anonymous";
@@ -320,11 +320,14 @@ export default function GeneratePage() {
 				canvas.width = width;
 				canvas.height = height;
 				const ctx = canvas.getContext("2d");
-				ctx.fillStyle = "#FFFFFF";
-				ctx.fillRect(0, 0, width, height);
+				if (outputFormat === "JPEG") {
+					ctx.fillStyle = "#FFFFFF";
+					ctx.fillRect(0, 0, width, height);
+				}
 				ctx.drawImage(img, 0, 0, width, height);
 
-				const dataUrl = canvas.toDataURL("image/jpeg", quality);
+				const format = outputFormat === "PNG" ? "image/png" : "image/jpeg";
+				const dataUrl = canvas.toDataURL(format, quality);
 				resolve({ dataUrl, width: img.width, height: img.height });
 			};
 			img.onerror = reject;
@@ -554,7 +557,7 @@ export default function GeneratePage() {
 				if (!bank.icon) return null;
 				const iconPath = bank.icon.startsWith("/") ? bank.icon : `/icon/${bank.icon}`;
 				try {
-					return await loadImageForPdf(iconPath, 200, 0.85);
+					return await loadImageForPdf(iconPath, 200, 0.85, "PNG");
 				} catch (error) {
 					return null;
 				}
@@ -570,7 +573,7 @@ export default function GeneratePage() {
 				const iconWidthTarget = iconHeightTarget * aspectRatio;
 				doc.addImage(
 					iconData.dataUrl,
-					"JPEG",
+					"PNG",
 					colX,
 					bankRowY - 9,
 					iconWidthTarget,
