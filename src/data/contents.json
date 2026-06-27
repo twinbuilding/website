@@ -6,12 +6,12 @@
 			"tail": "Engineering Design Services"
 		},
 		"tagline": "Precision design, resilient infrastructure",
-        "domain": "www.twinbuilding.com",
-		"address": "Doña Brigida, Tolosa, Leyte, Philippines",
-        "logo": "/icon/logo.svg",
-        "email": "info@twinbuilding.com",
-        "hours": "Mon-Fri, 9:00-18:00",
-        "emergency": "+63 910 742 0467"
+		"domain": "www.twinbuilding.com",
+		"address": "National Highway, Tanghas, Tolosa, Leyte, Philippines",
+		"logo": "/icon/logo.svg",
+		"email": "info@twinbuilding.com",
+		"hours": "Mon-Fri, 9:00-18:00",
+		"emergency": "+63 910 742 0467"
 	},
 	"author": {
 		"name": {
@@ -29,9 +29,9 @@
                 "icon": "gcash.png"
 			},
 			{
-				"bank": "Philippine National Bank",
-				"number": "1230 9753 502",
-                "icon": "pnb.png"
+				"bank": "Security Bank",
+				"number": "0000079357716",
+                "icon": "sec.png"
 			},
 			{
 				"bank": "MariBank",
