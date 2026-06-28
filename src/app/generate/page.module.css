@@ -135,6 +135,17 @@
   color: var(--foreground);
 }
 
+.inputGroup textarea {
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--accent-strong);
+  min-height: 96px;
+  resize: vertical;
+  font-size: 0.9rem;
+}
+
 input.inputError,
 select.inputError {
   border-color: #ef4444 !important;

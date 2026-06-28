@@ -32,6 +32,7 @@ export default function GeneratePage() {
 	const [downpaymentType, setDownpaymentType] = useState("percentage");
 	const [downpaymentValue, setDownpaymentValue] = useState(50);
 	const [clientIdInput, setClientIdInput] = useState("");
+	const [comments, setComments] = useState("");
 	const [previewUrl, setPreviewUrl] = useState("");
 	const [previewError, setPreviewError] = useState("");
 	const [isPreviewing, setIsPreviewing] = useState(false);
@@ -235,6 +236,7 @@ export default function GeneratePage() {
 			totals: calculateTotals(items, downpaymentType, downpaymentValue),
 			downpaymentType: docType === "invoice" ? downpaymentType : null,
 			downpaymentValue: docType === "invoice" ? downpaymentValue : null,
+			comments,
 		};
 	};
 
@@ -253,6 +255,7 @@ export default function GeneratePage() {
 			items,
 			downpaymentType,
 			downpaymentValue,
+			comments,
 		]
 	);
 
@@ -515,10 +518,18 @@ export default function GeneratePage() {
 		const footerY = pageHeight - margin - footerHeight;
 
 		const termsHeight = 68;
-		const termsY = footerY - 12 - termsHeight;
-
 		const payableHeight = 92;
-		const payableY = termsY - 12 - payableHeight;
+
+		// Two-column area below items: left = 60%, right = 40% with gap between columns
+		const columnGap = 12; // same gap used between rows
+		const leftColWidth = Math.floor(tableWidth * 0.6) - Math.floor(columnGap / 2);
+		const rightColWidth = tableWidth - leftColWidth - columnGap;
+		const leftX = margin;
+		const rightXCol = margin + leftColWidth + columnGap;
+
+		// Stack payable above terms in the left column
+		const payableY = footerY - 12 - (payableHeight + 12 + termsHeight);
+		const termsY = payableY + payableHeight + 12;
 
 		const payloadTotals = payloadData.totals || calculateTotals(payloadData.items);
 		payloadData.items.forEach((item) => {
@@ -536,6 +547,8 @@ export default function GeneratePage() {
 
 			doc.setFont("helvetica", "normal");
 			doc.setFontSize(9);
+
+
 			doc.text(descLines, margin + 16, y + 12);
 			doc.text(String(qty), margin + colWidths[0] + 16 + 32, y + 12);
 			doc.text(formatCurrency(price), margin + colWidths[0] + colWidths[1] + 32, y + 12);
@@ -567,20 +580,30 @@ export default function GeneratePage() {
 			doc.text(formatCurrency(payloadTotals.grandTotal), margin + colWidths[0] + colWidths[1] + colWidths[2] + 32, y + 12);
 		}
 
+		// Left column background blocks (Payable + Terms)
 		doc.setFillColor(0, 0, 0);
 		doc.setGState(new doc.GState({ opacity: 0.05 }));
-		doc.roundedRect(margin, payableY, tableWidth, payableHeight, footerRadius, footerRadius, "F");
+		doc.roundedRect(leftX, payableY, leftColWidth, payableHeight, footerRadius, footerRadius, "F");
+		doc.roundedRect(leftX, termsY, leftColWidth, termsHeight, footerRadius, footerRadius, "F");
 		doc.setGState(new doc.GState({ opacity: 1 }));
 
+		// Right column (Comments and Notes) block
+		doc.setFillColor(0, 0, 0);
+		doc.setGState(new doc.GState({ opacity: 0.05 }));
+		const commentsHeight = payableHeight + 12 + termsHeight;
+		doc.roundedRect(rightXCol, payableY, rightColWidth, commentsHeight, footerRadius, footerRadius, "F");
+		doc.setGState(new doc.GState({ opacity: 1 }));
+
+		// Payable to: single-line with author name
 		doc.setFont("helvetica", "bold");
 		doc.setFontSize(10.5);
-		doc.text("Payable to:", margin + 10, payableY + blockPadding + 10);
-		doc.setFont("helvetica", "normal");
-		doc.text(contents.author.name.full || "", margin + 10, payableY + blockPadding + 26);
-		const authorNameMarginBottom = 8;
+		const payableLabel = `Payable to: ${contents.author.name.full || ""}`.trim();
+		doc.text(payableLabel, leftX + 10, payableY + blockPadding + 16);
 
-		const bankColWidth = tableWidth / 3;
-		const bankRowY = payableY + blockPadding + 42 + authorNameMarginBottom;
+		// Banks: center within left column and fit to available width
+		const bankCount = Math.max(1, bankLines.length);
+		const bankColWidth = leftColWidth / bankCount;
+		const bankRowY = payableY + blockPadding + 36;
 		const bankIcons = await Promise.all(
 			bankLines.map(async (bank) => {
 				if (!bank.icon) return null;
@@ -594,41 +617,40 @@ export default function GeneratePage() {
 		);
 
 		bankLines.forEach((bank, index) => {
-			const colX = (pageWidth - tableWidth) / 2 + bankColWidth * index + 10 + 16;
+			const colCenter = leftX + bankColWidth * index + bankColWidth / 2;
 			const iconData = bankIcons[index];
+			let iconWidthTarget = 0;
+			let iconHeightTarget = 0;
 			if (iconData) {
-				const iconHeightTarget = 20;
+				iconHeightTarget = 20;
 				const aspectRatio = iconData.width / iconData.height;
-				const iconWidthTarget = iconHeightTarget * aspectRatio;
+				iconWidthTarget = iconHeightTarget * aspectRatio;
+				const iconX = colCenter - iconWidthTarget / 2;
 				doc.addImage(
 					iconData.dataUrl,
 					"PNG",
-					colX,
+					iconX,
 					bankRowY - 9,
 					iconWidthTarget,
 					iconHeightTarget
 				);
 			}
 			doc.setFont("helvetica", "normal");
-			doc.setFontSize(9.5);
-			const textX = iconData ? colX + (iconData.width / iconData.height) * 20 + 6 : colX;
-			doc.text(contents.author.name.base || "", textX, bankRowY);
-			doc.text(bank.number || "", textX, bankRowY + 12);
+			doc.setFontSize(9);
+			const textX = colCenter;
+			const iconSpace = iconHeightTarget || 0;
+			const textY = bankRowY + iconSpace + 6; // move text below icons
+			doc.text(contents.author.name.base || "", textX, textY, { align: "center" });
+			doc.text(bank.number || "", textX, textY + 10, { align: "center" });
 		});
 
-		doc.setFillColor(0, 0, 0);
-		doc.setGState(new doc.GState({ opacity: 0.05 }));
-		doc.roundedRect(margin, termsY, tableWidth, termsHeight, footerRadius, footerRadius, "F");
-		doc.setGState(new doc.GState({ opacity: 1 }));
-
+		// Terms and conditions in left column (smaller text)
 		doc.setFont("helvetica", "bold");
 		doc.setFontSize(10.5);
-		doc.text("Terms and conditions:", margin + 10, termsY + blockPadding + 10);
+		doc.text("Terms and conditions:", leftX + 10, termsY + blockPadding + 10);
 		doc.setFont("helvetica", "normal");
-		doc.setFontSize(9);
-		const termsLines = [
-			"- All rates quoted are valid for 15 days.",
-		];
+		doc.setFontSize(8);
+		const termsLines = ["- All rates quoted are valid for 15 days."];
 		if (payloadData.docType === "quotation") {
 			termsLines.push("- 50% payment should be done in advance.");
 			termsLines.push("- The remaining amount should be paid within 20 days of delivery.");
@@ -648,9 +670,28 @@ export default function GeneratePage() {
 
 		let termsYOffset = 0;
 		termsLines.forEach((line) => {
-			doc.text(line, margin + 10, termsY + blockPadding + 26 + termsYOffset);
+			doc.text(line, leftX + 10, termsY + blockPadding + 26 + termsYOffset);
 			termsYOffset += 10;
 		});
+
+		// Right column: Comments and Notes title (leave content area blank)
+		doc.setFont("helvetica", "bold");
+		doc.setFontSize(10.5);
+		doc.text("Comments and Notes:", rightXCol + 10, payableY + blockPadding + 16);
+		doc.setFont("helvetica", "normal");
+		doc.setFontSize(9);
+
+		// Render comments with accent color
+		const commentsText = (payloadData.comments || "").toString();
+		if (commentsText) {
+			// Accent-strong approximated RGB (mix of hue-jaune and black)
+			doc.setTextColor(160, 111, 17);
+			const commentsLines = doc.splitTextToSize(commentsText, rightColWidth - 16);
+			const commentsStartY = payableY + blockPadding + 32;
+			doc.text(commentsLines, rightXCol + 10, commentsStartY);
+			// Reset text color
+			doc.setTextColor(0, 0, 0);
+		}
 
 		doc.setFillColor(0, 0, 0);
 		doc.setGState(new doc.GState({ opacity: 0.05 }));
@@ -1071,6 +1112,16 @@ export default function GeneratePage() {
 										)}
 									</label>
 								)}
+
+								<label className={styles.inputGroup}>
+									<span>Comments and Notes</span>
+									<textarea
+										value={comments}
+										onChange={(e) => setComments(e.target.value)}
+										placeholder="Add comments or notes here"
+										rows={4}
+									/>
+								</label>
 
 								<button
 									type="button"
