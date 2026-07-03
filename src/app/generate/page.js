@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 
 const PREVIEW_DEBOUNCE_MS = 800;
 const createItem = (id) => ({ id, description: "", quantity: 1, price: 0 });
+const getTodayDateValue = () => new Date().toISOString().split("T")[0];
 
 export default function GeneratePage() {
 	const [docType, setDocType] = useState("quotation");
@@ -21,7 +22,7 @@ export default function GeneratePage() {
 	const [location, setLocation] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
 	const customerAutocompleteRef = useRef(null);
-	const [quoteDate, setQuoteDate] = useState(new Date().toISOString().split("T")[0]);
+	const [quoteDate, setQuoteDate] = useState(getTodayDateValue());
 	const nextItemId = useRef(1);
 	const [items, setItems] = useState([createItem(0)]);
 	const [showItemSuggestions, setShowItemSuggestions] = useState({});
@@ -29,6 +30,13 @@ export default function GeneratePage() {
 	const [suffixOptions, setSuffixOptions] = useState(["A1"]);
 	const [invoiceData, setInvoiceData] = useState(null);
 	const [invoiceFileName, setInvoiceFileName] = useState("");
+	const [receiptData, setReceiptData] = useState(null);
+	const [receiptFileName, setReceiptFileName] = useState("");
+	const [receiptAmountPaid, setReceiptAmountPaid] = useState("");
+	const [paymentStatus, setPaymentStatus] = useState("full");
+	const [receiptBalanceAmount, setReceiptBalanceAmount] = useState("");
+	const [balanceDueDate, setBalanceDueDate] = useState("");
+	const [receiptDate, setReceiptDate] = useState(getTodayDateValue());
 	const [downpaymentType, setDownpaymentType] = useState("percentage");
 	const [downpaymentValue, setDownpaymentValue] = useState(50);
 	const [clientIdInput, setClientIdInput] = useState("");
@@ -77,6 +85,30 @@ export default function GeneratePage() {
 			"July", "August", "September", "October", "November", "December",
 		];
 		return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+	};
+
+	const resolveReceiptAmountPaid = (data, selectedStatus) => {
+		if (!data) return "";
+		const explicitAmount = data.amountPaid;
+		if (explicitAmount != null && explicitAmount !== "") return explicitAmount;
+		if (selectedStatus === "partial") {
+			const downpayment = data?.totals?.downpayment;
+			if (downpayment != null && downpayment !== "") return downpayment;
+		}
+		const grandTotal = data?.totals?.grandTotal;
+		if (grandTotal != null && grandTotal !== "") return grandTotal;
+		const downpayment = data?.totals?.downpayment;
+		if (downpayment != null && downpayment !== "") return downpayment;
+		return "";
+	};
+
+	const resolveReceiptBalanceAmount = (data) => {
+		if (!data) return "";
+		const explicitBalance = data.balanceAmount;
+		if (explicitBalance != null && explicitBalance !== "") return explicitBalance;
+		const balance = data?.totals?.balance;
+		if (balance != null && balance !== "") return balance;
+		return "";
 	};
 
 	const formatCustomerDisplay = (customer) => {
@@ -153,6 +185,33 @@ export default function GeneratePage() {
 	}, []);
 
 	useEffect(() => {
+		if (paymentStatus !== "partial") {
+			setReceiptBalanceAmount("");
+			return;
+		}
+
+		if (!receiptData) {
+			return;
+		}
+
+		const baseBalance = Number(resolveReceiptBalanceAmount(receiptData) || 0);
+		const paidAmount = Number(receiptAmountPaid || 0);
+
+		if (!Number.isFinite(baseBalance) || !Number.isFinite(paidAmount)) {
+			return;
+		}
+
+		const nextBalance = Math.max(0, baseBalance - paidAmount);
+		setReceiptBalanceAmount(String(nextBalance));
+	}, [paymentStatus, receiptAmountPaid, receiptData]);
+
+	useEffect(() => {
+		if (docType === "receipt" && !receiptDate) {
+			setReceiptDate(getTodayDateValue());
+		}
+	}, [docType, receiptDate]);
+
+	useEffect(() => {
 		const handleClickOutside = (event) => {
 			if (customerAutocompleteRef.current && !customerAutocompleteRef.current.contains(event.target)) {
 				setShowSuggestions(false);
@@ -178,7 +237,7 @@ export default function GeneratePage() {
 	};
 
 	const buildDocNumber = (type, clientId, dateValue, suffix) => {
-		const prefix = type === "invoice" ? "IN" : "QT";
+		const prefix = type === "invoice" ? "IN" : type === "receipt" ? "RC" : "QT";
 		const safeId = clientId && clientId !== "-" ? clientId : "0000000";
 		const safeDate = formatDocDate(dateValue);
 		const safeSuffix = normalizeSuffix(suffix || "A1");
@@ -237,6 +296,12 @@ export default function GeneratePage() {
 			downpaymentType: docType === "invoice" ? downpaymentType : null,
 			downpaymentValue: docType === "invoice" ? downpaymentValue : null,
 			comments,
+			receiptData,
+			receiptAmountPaid,
+			paymentStatus,
+			receiptBalanceAmount,
+			balanceDueDate,
+			receiptDate,
 		};
 	};
 
@@ -246,6 +311,7 @@ export default function GeneratePage() {
 			docType,
 			docNumber,
 			invoiceData,
+			receiptData,
 			docSuffix,
 			customerName,
 			customerId,
@@ -256,6 +322,11 @@ export default function GeneratePage() {
 			downpaymentType,
 			downpaymentValue,
 			comments,
+			receiptAmountPaid,
+			paymentStatus,
+			receiptBalanceAmount,
+			balanceDueDate,
+			receiptDate,
 		]
 	);
 
@@ -271,12 +342,47 @@ export default function GeneratePage() {
 			setCustomerId(data.customerId || "-");
 			setCustomerTitle(data.customerTitle || "");
 			setLocation(data.location || "");
-			setQuoteDate(data.quoteDate || new Date().toISOString().split("T")[0]);
+			setQuoteDate(data.quoteDate || getTodayDateValue());
 			setItems(Array.isArray(data.items) && data.items.length > 0 ? data.items : [createItem(0)]);
 			setDocSuffix(normalizeSuffix(data.suffix || data.docSuffix || "A1"));
 		} catch (error) {
 			console.error("Failed to read invoice JSON:", error);
 		}
+	};
+
+	const handleReceiptFile = async (event) => {
+		const file = event.target.files && event.target.files[0];
+		if (!file) return;
+		try {
+			const text = await file.text();
+			const data = JSON.parse(text);
+			setReceiptData(data);
+			setReceiptFileName(file.name);
+			setReceiptAmountPaid(resolveReceiptAmountPaid(data, paymentStatus));
+			setReceiptBalanceAmount(resolveReceiptBalanceAmount(data));
+			setBalanceDueDate("");
+			setReceiptDate(getTodayDateValue());
+			setCustomerName(data.customerName || "");
+			setCustomerId(data.customerId || "-");
+			setCustomerTitle(data.customerTitle || "");
+			setLocation(data.location || "");
+			setQuoteDate(data.quoteDate || getTodayDateValue());
+			setItems(Array.isArray(data.items) && data.items.length > 0 ? data.items : [createItem(0)]);
+			setDocSuffix(normalizeSuffix(data.suffix || data.docSuffix || "A1"));
+		} catch (error) {
+			console.error("Failed to read receipt JSON:", error);
+		}
+	};
+
+	const formatAmountLabel = (value) => {
+		const num = Number(value);
+		if (!Number.isFinite(num)) return "P0";
+		const rounded = Math.round(num * 100) / 100;
+		const formatted = rounded.toLocaleString("en-US", {
+			minimumFractionDigits: rounded % 1 === 0 ? 0 : 2,
+			maximumFractionDigits: 2,
+		});
+		return `P${formatted}`;
 	};
 
 	const formatCurrency = (value) => {
@@ -315,6 +421,15 @@ export default function GeneratePage() {
 		if (docType === "invoice") {
 			return invoiceData !== null;
 		}
+		if (docType === "receipt") {
+			const amountPaidValue = Number(receiptAmountPaid);
+			const balanceValue = Number(receiptBalanceAmount);
+			if (!receiptData || !receiptDate) return false;
+			if (paymentStatus === "partial") {
+				return Boolean(balanceDueDate) && Number.isFinite(balanceValue) && balanceValue >= 0 && Number.isFinite(amountPaidValue) && amountPaidValue >= 0;
+			}
+			return Number.isFinite(amountPaidValue) && amountPaidValue >= 0;
+		}
 		return true;
 	};
 
@@ -326,6 +441,12 @@ export default function GeneratePage() {
 		items,
 		docType,
 		invoiceData,
+		receiptData,
+		receiptAmountPaid,
+		paymentStatus,
+		receiptBalanceAmount,
+		balanceDueDate,
+		receiptDate,
 	]);
 
 	useEffect(() => {
@@ -389,7 +510,200 @@ export default function GeneratePage() {
 		return { svg, width, height };
 	};
 
+	const toOrdinal = (value) => {
+		const day = Number(value);
+		if (!Number.isFinite(day)) return "";
+		const suffixes = ["th", "st", "nd", "rd"];
+		const v = day % 100;
+		return `${day}${suffixes[(v - 20) % 10] !== undefined && (v >= 11 && v <= 13) ? "th" : suffixes[v] || "th"}`;
+	};
+
+	const formatLongReceiptDate = (dateString) => {
+		if (!dateString) return "";
+		const date = new Date(dateString);
+		const months = [
+			"January", "February", "March", "April", "May", "June",
+			"July", "August", "September", "October", "November", "December",
+		];
+		return `${toOrdinal(date.getDate())} day of ${months[date.getMonth()]}, ${date.getFullYear()}`;
+	};
+
+	const numberToWords = (value) => {
+		const safeValue = Math.floor(Number(value) || 0);
+		if (safeValue === 0) return "Zero";
+		const ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+		const teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+		const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+		const scales = ["", "Thousand", "Million", "Billion"];
+		const chunks = [];
+		let remaining = safeValue;
+		let scaleIndex = 0;
+		while (remaining > 0) {
+			const chunk = remaining % 1000;
+			if (chunk > 0) {
+				let chunkText = "";
+				const hundreds = Math.floor(chunk / 100);
+				const remainder = chunk % 100;
+				if (hundreds > 0) {
+					chunkText += `${ones[hundreds]} Hundred`;
+				}
+				if (remainder >= 10 && remainder < 20) {
+					chunkText += `${chunkText ? " " : ""}${teens[remainder - 10]}`;
+				} else {
+					const tensPart = Math.floor(remainder / 10);
+					const onesPart = remainder % 10;
+					if (tensPart > 0) {
+						chunkText += `${chunkText ? " " : ""}${tens[tensPart]}`;
+					}
+					if (onesPart > 0) {
+						chunkText += `${chunkText ? " " : ""}${ones[onesPart]}`;
+					}
+				}
+				if (scales[scaleIndex]) {
+					chunkText += `${chunkText ? " " : ""}${scales[scaleIndex]}`;
+				}
+				chunks.unshift(chunkText);
+			}
+			remaining = Math.floor(remaining / 1000);
+			scaleIndex += 1;
+		}
+		return chunks.join(" ");
+	};
+
+	const createReceiptDocument = async (payloadData) => {
+		const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+		const pageWidth = doc.internal.pageSize.getWidth();
+		const pageHeight = doc.internal.pageSize.getHeight();
+		const margin = 48;
+		const tableWidth = pageWidth - margin * 2;
+		const logoHeight = 72;
+		let y = margin;
+		const lineHeight = 15;
+
+		try {
+			const svgData = await loadSvgForPdf("/branding/banner.svg");
+			const aspectRatio = svgData.width / svgData.height;
+			const bannerWidth = Math.min(tableWidth, logoHeight + 220) * 0.85;
+			const bannerHeight = bannerWidth / aspectRatio;
+			await svg2pdf(svgData.svg, doc, {
+				x: margin - 6,
+				y: margin - 15,
+				width: bannerWidth,
+				height: bannerHeight,
+			});
+		} catch (error) {
+			console.error("Failed to load banner SVG for receipt:", error);
+		}
+
+		try {
+			const watermarkData = await loadImageForPdf("/branding/logo.png", 800, 0.85);
+			const watermarkWidth = pageWidth * 0.75;
+			const aspectRatio = watermarkData.width / watermarkData.height;
+			const watermarkHeight = watermarkWidth / aspectRatio;
+			const centerX = (pageWidth - watermarkWidth) / 2;
+			const centerY = (pageHeight - watermarkHeight) / 2 - 40;
+			if (doc.setGState && doc.GState) {
+				doc.setGState(new doc.GState({ opacity: 0.08 }));
+				doc.addImage(
+					watermarkData.dataUrl,
+					"JPEG",
+					centerX,
+					centerY,
+					watermarkWidth,
+					watermarkHeight
+				);
+				doc.setGState(new doc.GState({ opacity: 1 }));
+			}
+		} catch (error) {
+			console.error("Failed to load watermark PNG for receipt:", error);
+		}
+
+		y += 90 + 42;
+		doc.setFont("helvetica", "bold");
+		doc.setFontSize(16);
+		doc.text("ACKNOWLEDGEMENT RECEIPT", pageWidth / 2, y, { align: "center" });
+		y += 26;
+		y += 24;
+
+		doc.setFont("helvetica", "normal");
+		doc.setFontSize(11);
+		const clientTitle = (payloadData.customerTitle || "").trim();
+		const clientName = (payloadData.customerName || "").trim();
+		const clientLabel = [clientTitle, clientName].filter(Boolean).join(" ").trim() || "-";
+		const amountPaid = Number(payloadData.receiptAmountPaid ?? 0);
+		const paymentStatusLabel = payloadData.paymentStatus === "partial" ? "partial" : "full";
+		const amountWords = numberToWords(Math.floor(amountPaid));
+		const amountText = `${amountWords} Pesos (${formatAmountLabel(amountPaid)})`;
+		const introText = `This serves as formal acknowledgement that I, ${contents.author.name.full || ""}, have received the total amount of ${amountText} from ${clientLabel}.`;
+		const introLines = doc.splitTextToSize(introText, pageWidth - margin * 2);
+		doc.text(introLines, margin, y);
+		y += introLines.length * lineHeight + 10;
+
+		const settlementText = `This payment constitutes ${paymentStatusLabel} settlement for professional engineering services rendered, detailed as follows:`;
+		const settlementLines = doc.splitTextToSize(settlementText, pageWidth - margin * 2);
+		doc.text(settlementLines, margin, y);
+		y += settlementLines.length * lineHeight + 10;
+
+		(payloadData.items || []).forEach((item) => {
+			const serviceLine = `• ${item.description || "-"}`;
+			const serviceLines = doc.splitTextToSize(serviceLine, pageWidth - margin * 2 - 16);
+			doc.text(serviceLines, margin + 12, y);
+			y += serviceLines.length * lineHeight;
+		});
+
+		if (payloadData.paymentStatus === "partial") {
+			y += 10;
+			const balanceAmount = Number(payloadData.receiptBalanceAmount ?? 0);
+			const dueDate = payloadData.balanceDueDate ? formatLongDate(payloadData.balanceDueDate) : "-";
+			const balanceText = `The balance of ${formatCurrency(balanceAmount)} shall be paid to me by ${dueDate} upon the completion and turnover of plans to the latter.`;
+			const balanceLines = doc.splitTextToSize(balanceText, pageWidth - margin * 2);
+			doc.text(balanceLines, margin, y);
+			y += balanceLines.length * lineHeight + 10;
+		}
+
+		y += 10;
+		const receiptDateText = payloadData.receiptDate ? formatLongReceiptDate(payloadData.receiptDate) : "-";
+		const addressText = contents.website.address || "";
+		const closingText = `Signed and executed at ${addressText}, this ${receiptDateText}.`;
+		const closingLines = doc.splitTextToSize(closingText, pageWidth - margin * 2);
+		doc.text(closingLines, margin, y);
+		y += closingLines.length * lineHeight + 24;
+
+		doc.setFont("helvetica", "bold");
+		doc.text(contents.author.name.full || "", margin, y);
+		y += lineHeight;
+		doc.setFont("helvetica", "normal");
+		doc.text(contents.author.title || "", margin, y);
+		y += lineHeight + 8;
+		doc.text(`PRC License No. ${contents.author.prcLicense || "[Insert License Number]"}`, margin, y);
+
+		const footerHeight = 28;
+		const footerRadius = 3;
+		const footerY = pageHeight - margin - footerHeight;
+		const footerPadding = 8;
+		doc.setFillColor(0, 0, 0);
+		doc.setGState(new doc.GState({ opacity: 0.05 }));
+		doc.roundedRect(margin, footerY, tableWidth, footerHeight, footerRadius, footerRadius, "F");
+		doc.setGState(new doc.GState({ opacity: 1 }));
+
+		doc.setFont("helvetica", "normal");
+		doc.setFontSize(9);
+		const footerTextY = footerY + footerPadding + 10;
+		const col1X = margin + 8;
+		const col2X = margin + tableWidth / 2;
+		const col3X = pageWidth - margin - 8;
+		doc.text(contents.author.contact || "", col1X, footerTextY);
+		doc.text(contents.website.email || "", col2X, footerTextY, { align: "center" });
+		doc.text(contents.website.domain || "", col3X, footerTextY, { align: "right" });
+
+		return doc;
+	};
+
 	const createPdfDocument = async (payloadData) => {
+		if (payloadData.docType === "receipt") {
+			return createReceiptDocument(payloadData);
+		}
+
 		const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
 		const pageWidth = doc.internal.pageSize.getWidth();
 		const pageHeight = doc.internal.pageSize.getHeight();
@@ -724,6 +1038,13 @@ export default function GeneratePage() {
 			return;
 		}
 
+		if (docType === "receipt" && (!receiptData || !receiptDate || (paymentStatus === "partial" && (!receiptBalanceAmount || !balanceDueDate)))) {
+			setPreviewError("Complete the receipt details and upload a JSON file to preview.");
+			setPreviewUrl("");
+			setIsPreviewing(false);
+			return;
+		}
+
 		let isCancelled = false;
 		const timeoutId = setTimeout(async () => {
 			setIsPreviewing(true);
@@ -750,7 +1071,7 @@ export default function GeneratePage() {
 			isCancelled = true;
 			clearTimeout(timeoutId);
 		};
-	}, [payload, docType, invoiceData]);
+	}, [payload, docType, invoiceData, receiptData, receiptDate, paymentStatus, receiptBalanceAmount, balanceDueDate]);
 
 	useEffect(() => {
 		return () => {
@@ -783,6 +1104,10 @@ export default function GeneratePage() {
 		setGenerateError("");
 		if (docType === "invoice" && !invoiceData) {
 			setGenerateError("Upload a quotation JSON file before generating an invoice.");
+			return;
+		}
+		if (docType === "receipt" && !receiptData) {
+			setGenerateError("Upload a JSON file before generating a receipt.");
 			return;
 		}
 		const freshPayload = buildPayload();
@@ -854,6 +1179,16 @@ export default function GeneratePage() {
 										onClick={() => setDocType("invoice")}
 									>
 										Invoice
+									</Button>
+									<Button
+										type="button"
+										variant="soft"
+										size="sm"
+										active={docType === "receipt"}
+										className={`${styles.docTypeButton} ${docType === "receipt" ? styles.docTypeButtonActive : ""}`}
+										onClick={() => setDocType("receipt")}
+									>
+										Confirm Receipt
 									</Button>
 								</div>
 
@@ -1113,30 +1448,107 @@ export default function GeneratePage() {
 									</label>
 								)}
 
-								<label className={styles.inputGroup}>
-									<span>Comments and Notes</span>
-									<textarea
-										value={comments}
-										onChange={(e) => setComments(e.target.value)}
-										placeholder="Add comments or notes here"
-										rows={4}
-									/>
-								</label>
+									{docType === "receipt" && (
+										<div className={styles.formGrid}>
+											<label className={styles.inputGroup}>
+												<span>Upload quotation or invoice JSON</span>
+												<input
+													type="file"
+													accept="application/json"
+													onChange={handleReceiptFile}
+												/>
+												{receiptFileName && (
+													<span className={styles.fileHint}>{receiptFileName}</span>
+												)}
+											</label>
+											<label className={styles.inputGroup}>
+												<span>Amount paid</span>
+												<input
+													type="number"
+													step="0.01"
+													value={receiptAmountPaid}
+													onChange={(e) => setReceiptAmountPaid(e.target.value)}
+													placeholder="Enter amount paid"
+												/>
+											</label>
+											<label className={styles.inputGroup}>
+												<span>Full payment?</span>
+												<input
+													type="checkbox"
+													checked={paymentStatus === "full"}
+													onChange={(e) => {
+														const nextStatus = e.target.checked ? "full" : "partial";
+														setPaymentStatus(nextStatus);
+														if (nextStatus === "full") {
+															setReceiptBalanceAmount("");
+														}
+													}}
+												/>
+											</label>
+											{paymentStatus === "partial" && (
+												<>
+													<label className={styles.inputGroup}>
+														<span>Balance amount</span>
+														<input
+															type="number"
+															value={receiptBalanceAmount}
+															onChange={(e) => setReceiptBalanceAmount(e.target.value)}
+															placeholder="Enter balance"
+														/>
+													</label>
+													<label className={styles.inputGroup}>
+														<span>Balance due date</span>
+														<input
+															type="date"
+															value={balanceDueDate}
+															onChange={(e) => {
+																setBalanceDueDate(e.target.value);
+																setAttemptedSubmit(false);
+															}}
+														/>
+													</label>
+												</>
+											)}
+											<label className={styles.inputGroup}>
+												<span>Receipt date</span>
+												<input
+													type="date"
+													value={receiptDate}
+													onChange={(e) => {
+														setReceiptDate(e.target.value);
+														setAttemptedSubmit(false);
+													}}
+												/>
+											</label>
+										</div>
+									)}
 
-								<button
-									type="button"
-									className={`${styles.generateButton} ${canGenerate ? styles.generateButtonReady : ""}`}
-									onClick={handleGenerate}
-									aria-disabled={!canGenerate}
-								>
-									Generate
-								</button>
-								{generateError && <p className={styles.generateError}>{generateError}</p>}
+									{docType !== "receipt" && (
+										<label className={styles.inputGroup}>
+											<span>Comments and Notes</span>
+											<textarea
+												value={comments}
+												onChange={(e) => setComments(e.target.value)}
+												placeholder="Add comments or notes here"
+												rows={4}
+											/>
+										</label>
+									)}
+
+									<button
+										type="button"
+										className={`${styles.generateButton} ${canGenerate ? styles.generateButtonReady : ""}`}
+										onClick={handleGenerate}
+										aria-disabled={!canGenerate}
+									>
+										Generate
+									</button>
+									{generateError && <p className={styles.generateError}>{generateError}</p>}
+								</div>
 							</div>
-						</div>
 
-						<aside className={styles.previewPane} aria-live="polite">
-							<div className={styles.previewHeader}>
+							<aside className={styles.previewPane} aria-live="polite">
+								<div className={styles.previewHeader}>
 								{isPreviewing && <span className={styles.previewStatus}>Updating…</span>}
 							</div>
 							{previewError ? (
