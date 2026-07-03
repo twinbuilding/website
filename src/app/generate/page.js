@@ -13,6 +13,13 @@ import Button from "@/components/Button";
 const PREVIEW_DEBOUNCE_MS = 800;
 const createItem = (id) => ({ id, description: "", quantity: 1, price: 0 });
 const getTodayDateValue = () => new Date().toISOString().split("T")[0];
+const getDateOffsetValue = (dateString, days) => {
+	if (!dateString) return "";
+	const date = new Date(dateString);
+	if (Number.isNaN(date.getTime())) return "";
+	date.setDate(date.getDate() + days);
+	return date.toISOString().split("T")[0];
+};
 
 export default function GeneratePage() {
 	const [docType, setDocType] = useState("quotation");
@@ -30,12 +37,14 @@ export default function GeneratePage() {
 	const [suffixOptions, setSuffixOptions] = useState(["A1"]);
 	const [invoiceData, setInvoiceData] = useState(null);
 	const [invoiceFileName, setInvoiceFileName] = useState("");
+	const [invoiceUploadError, setInvoiceUploadError] = useState("");
 	const [receiptData, setReceiptData] = useState(null);
 	const [receiptFileName, setReceiptFileName] = useState("");
+	const [receiptUploadError, setReceiptUploadError] = useState("");
 	const [receiptAmountPaid, setReceiptAmountPaid] = useState("");
-	const [paymentStatus, setPaymentStatus] = useState("full");
+	const [paymentStatus, setPaymentStatus] = useState("partial");
 	const [receiptBalanceAmount, setReceiptBalanceAmount] = useState("");
-	const [balanceDueDate, setBalanceDueDate] = useState("");
+	const [balanceDueDate, setBalanceDueDate] = useState(getDateOffsetValue(getTodayDateValue(), 20));
 	const [receiptDate, setReceiptDate] = useState(getTodayDateValue());
 	const [downpaymentType, setDownpaymentType] = useState("percentage");
 	const [downpaymentValue, setDownpaymentValue] = useState(50);
@@ -87,6 +96,12 @@ export default function GeneratePage() {
 		return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 	};
 
+	const isExpectedUploadedFilePrefix = (fileName, expectedPrefix) => {
+		const baseName = (fileName || "").split(/[\\/]/).pop();
+		if (!baseName) return false;
+		return baseName.toUpperCase().startsWith(expectedPrefix);
+	};
+
 	const resolveReceiptAmountPaid = (data, selectedStatus) => {
 		if (!data) return "";
 		const explicitAmount = data.amountPaid;
@@ -109,6 +124,12 @@ export default function GeneratePage() {
 		const balance = data?.totals?.balance;
 		if (balance != null && balance !== "") return balance;
 		return "";
+	};
+
+	const resolveReceiptPaymentStatus = (data) => {
+		if (!data) return "partial";
+		const balance = Number(data?.totals?.balance ?? 0);
+		return Number.isFinite(balance) && balance > 0 ? "partial" : "full";
 	};
 
 	const formatCustomerDisplay = (customer) => {
@@ -194,16 +215,33 @@ export default function GeneratePage() {
 			return;
 		}
 
-		const baseBalance = Number(resolveReceiptBalanceAmount(receiptData) || 0);
+		const totalAmount = Number(
+			receiptData?.totals?.grandTotal ??
+			receiptData?.totals?.subtotal ??
+			receiptData?.totals?.balance ??
+			receiptData?.totals?.downpayment ??
+			0
+		);
 		const paidAmount = Number(receiptAmountPaid || 0);
 
-		if (!Number.isFinite(baseBalance) || !Number.isFinite(paidAmount)) {
+		if (!Number.isFinite(totalAmount) || !Number.isFinite(paidAmount)) {
 			return;
 		}
 
-		const nextBalance = Math.max(0, baseBalance - paidAmount);
+		const nextBalance = Math.max(0, totalAmount - paidAmount);
 		setReceiptBalanceAmount(String(nextBalance));
 	}, [paymentStatus, receiptAmountPaid, receiptData]);
+
+	useEffect(() => {
+		if (paymentStatus !== "partial") {
+			return;
+		}
+
+		const baseDate = receiptData?.quoteDate || quoteDate || receiptDate;
+		if (!balanceDueDate && baseDate) {
+			setBalanceDueDate(getDateOffsetValue(baseDate, 20));
+		}
+	}, [paymentStatus, receiptData, quoteDate, receiptDate, balanceDueDate]);
 
 	useEffect(() => {
 		if (docType === "receipt" && !receiptDate) {
@@ -333,6 +371,17 @@ export default function GeneratePage() {
 	const handleInvoiceFile = async (event) => {
 		const file = event.target.files && event.target.files[0];
 		if (!file) return;
+
+		if (!isExpectedUploadedFilePrefix(file.name, "QT")) {
+			setInvoiceData(null);
+			setInvoiceFileName("");
+			setInvoiceUploadError("Please upload a quotation JSON file (prefixed with QT).");
+			setPreviewError("Please upload a quotation JSON file (prefixed with QT).");
+			setGenerateError("Please upload a quotation JSON file (prefixed with QT).");
+			return;
+		}
+
+		setInvoiceUploadError("");
 		try {
 			const text = await file.text();
 			const data = JSON.parse(text);
@@ -353,14 +402,29 @@ export default function GeneratePage() {
 	const handleReceiptFile = async (event) => {
 		const file = event.target.files && event.target.files[0];
 		if (!file) return;
+
+		if (!isExpectedUploadedFilePrefix(file.name, "IN")) {
+			setReceiptData(null);
+			setReceiptFileName("");
+			setReceiptUploadError("Please upload an invoice JSON file (prefixed with IN).");
+			setPreviewError("Please upload an invoice JSON file (prefixed with IN).");
+			setGenerateError("Please upload an invoice JSON file (prefixed with IN).");
+			return;
+		}
+
+		setReceiptUploadError("");
 		try {
 			const text = await file.text();
 			const data = JSON.parse(text);
+			const nextPaymentStatus = resolveReceiptPaymentStatus(data);
+			const nextAmountPaid = resolveReceiptAmountPaid(data, nextPaymentStatus);
+			const nextBalanceAmount = resolveReceiptBalanceAmount(data);
 			setReceiptData(data);
 			setReceiptFileName(file.name);
-			setReceiptAmountPaid(resolveReceiptAmountPaid(data, paymentStatus));
-			setReceiptBalanceAmount(resolveReceiptBalanceAmount(data));
-			setBalanceDueDate("");
+			setReceiptAmountPaid(nextAmountPaid);
+			setReceiptBalanceAmount(nextPaymentStatus === "partial" ? nextBalanceAmount : "");
+			setPaymentStatus(nextPaymentStatus);
+			setBalanceDueDate(getDateOffsetValue(data.quoteDate || getTodayDateValue(), 20));
 			setReceiptDate(getTodayDateValue());
 			setCustomerName(data.customerName || "");
 			setCustomerId(data.customerId || "-");
@@ -416,7 +480,7 @@ export default function GeneratePage() {
 		if (!clientIdInput.trim()) return false;
 		if (!location.trim()) return false;
 		if (docType === "quotation") {
-			return items.some(item => item.description.trim());
+			return items.some((item) => item.description.trim());
 		}
 		if (docType === "invoice") {
 			return invoiceData !== null;
@@ -426,7 +490,12 @@ export default function GeneratePage() {
 			const balanceValue = Number(receiptBalanceAmount);
 			if (!receiptData || !receiptDate) return false;
 			if (paymentStatus === "partial") {
-				return Boolean(balanceDueDate) && Number.isFinite(balanceValue) && balanceValue >= 0 && Number.isFinite(amountPaidValue) && amountPaidValue >= 0;
+				return Boolean(balanceDueDate)
+					&& balanceDueDate >= receiptDate
+					&& Number.isFinite(balanceValue)
+					&& balanceValue >= 0
+					&& Number.isFinite(amountPaidValue)
+					&& amountPaidValue >= 0;
 			}
 			return Number.isFinite(amountPaidValue) && amountPaidValue >= 0;
 		}
@@ -618,6 +687,34 @@ export default function GeneratePage() {
 			console.error("Failed to load watermark PNG for receipt:", error);
 		}
 
+		const rightX = pageWidth - margin;
+		doc.setFont("helvetica", "normal");
+		doc.setFontSize(9.5);
+		let rightY = margin + 14;
+		const rawTitle = (payloadData.customerTitle || "").trim();
+		const clientName = (payloadData.customerName || "").trim();
+		const namePart = clientName ? clientName.toUpperCase() : "-";
+		const titlePart = rawTitle ? rawTitle.toUpperCase() : "";
+		const formattedName = titlePart
+			? `CLIENT: ${titlePart} ${namePart}`
+			: `CLIENT: ${namePart}`;
+		doc.text(formattedName, rightX, rightY, { align: "right" });
+		rightY += 14;
+
+		const locationText = (payloadData.location || "").trim();
+		if (locationText) {
+			doc.text(`LOCATION: ${locationText.toUpperCase()}`, rightX, rightY, { align: "right" });
+			rightY += 14;
+		}
+
+		const receiptDocNumber = payloadData.receiptData?.docNumber
+			|| payloadData.receiptData?.sourceDocNumber
+			|| payloadData.docNumber
+			|| "-";
+		doc.text(`${receiptDocNumber}`.toUpperCase(), rightX, rightY, { align: "right" });
+		rightY += 14;
+		doc.text(formatLongDate(payloadData.receiptDate || payloadData.quoteDate) || "-", rightX, rightY, { align: "right" });
+
 		y += 90 + 42;
 		doc.setFont("helvetica", "bold");
 		doc.setFontSize(16);
@@ -627,9 +724,9 @@ export default function GeneratePage() {
 
 		doc.setFont("helvetica", "normal");
 		doc.setFontSize(11);
-		const clientTitle = (payloadData.customerTitle || "").trim();
-		const clientName = (payloadData.customerName || "").trim();
-		const clientLabel = [clientTitle, clientName].filter(Boolean).join(" ").trim() || "-";
+		const receiptClientTitle = (payloadData.customerTitle || "").trim();
+		const receiptClientName = (payloadData.customerName || "").trim();
+		const clientLabel = [receiptClientTitle, receiptClientName].filter(Boolean).join(" ").trim() || "-";
 		const amountPaid = Number(payloadData.receiptAmountPaid ?? 0);
 		const paymentStatusLabel = payloadData.paymentStatus === "partial" ? "partial" : "full";
 		const amountWords = numberToWords(Math.floor(amountPaid));
@@ -1031,18 +1128,36 @@ export default function GeneratePage() {
 	};
 
 	useEffect(() => {
-		if (docType === "invoice" && !invoiceData) {
-			setPreviewError("Upload a quotation JSON file to preview an invoice.");
-			setPreviewUrl("");
-			setIsPreviewing(false);
-			return;
+		if (docType === "invoice") {
+			if (!invoiceData) {
+				setPreviewError(invoiceUploadError || "Upload a quotation JSON file to preview an invoice.");
+				setPreviewUrl("");
+				setIsPreviewing(false);
+				return;
+			}
 		}
 
-		if (docType === "receipt" && (!receiptData || !receiptDate || (paymentStatus === "partial" && (!receiptBalanceAmount || !balanceDueDate)))) {
-			setPreviewError("Complete the receipt details and upload a JSON file to preview.");
-			setPreviewUrl("");
-			setIsPreviewing(false);
-			return;
+		if (docType === "receipt") {
+			if (!receiptData) {
+				setPreviewError(receiptUploadError || "Complete the receipt details and upload a JSON file to preview.");
+				setPreviewUrl("");
+				setIsPreviewing(false);
+				return;
+			}
+
+			if (!receiptDate || (paymentStatus === "partial" && (!receiptBalanceAmount || !balanceDueDate))) {
+				setPreviewError("Complete the receipt details and upload a JSON file to preview.");
+				setPreviewUrl("");
+				setIsPreviewing(false);
+				return;
+			}
+
+			if (paymentStatus === "partial" && balanceDueDate < receiptDate) {
+				setPreviewError("Balance due date must be on or after the receipt date.");
+				setPreviewUrl("");
+				setIsPreviewing(false);
+				return;
+			}
 		}
 
 		let isCancelled = false;
@@ -1087,11 +1202,14 @@ export default function GeneratePage() {
 	const handleGenerate = async () => {
 		if (!canGenerate) {
 			setAttemptedSubmit(true);
-			setGenerateError(
-				docType === "invoice" && !invoiceData
-					? "Upload a quotation JSON file before generating an invoice."
-					: "Complete all required fields before generating."
-			);
+			const validationMessage = docType === "invoice"
+				? (invoiceUploadError || "Upload a quotation JSON file before generating an invoice.")
+				: docType === "receipt"
+					? (receiptUploadError || (paymentStatus === "partial" && balanceDueDate < receiptDate
+						? "Balance due date must be on or after the receipt date."
+						: "Complete all required fields before generating."))
+					: "Complete all required fields before generating.";
+			setGenerateError(validationMessage);
 
 			if (attemptedSubmitRef.current) clearTimeout(attemptedSubmitRef.current);
 			attemptedSubmitRef.current = setTimeout(() => {
@@ -1103,16 +1221,22 @@ export default function GeneratePage() {
 
 		setGenerateError("");
 		if (docType === "invoice" && !invoiceData) {
-			setGenerateError("Upload a quotation JSON file before generating an invoice.");
+			setGenerateError(invoiceUploadError || "Upload a quotation JSON file before generating an invoice.");
 			return;
 		}
-		if (docType === "receipt" && !receiptData) {
-			setGenerateError("Upload a JSON file before generating a receipt.");
-			return;
+		if (docType === "receipt") {
+			if (!receiptData) {
+				setGenerateError(receiptUploadError || "Upload a JSON file before generating a receipt.");
+				return;
+			}
+			if (paymentStatus === "partial" && balanceDueDate < receiptDate) {
+				setGenerateError("Balance due date must be on or after the receipt date.");
+				return;
+			}
 		}
 		const freshPayload = buildPayload();
 		persistSuffix(freshPayload.suffix);
-		if (docType === "quotation") {
+		if (docType === "quotation" || docType === "invoice") {
 			downloadJson(freshPayload);
 		}
 		const doc = await createPdfDocument(freshPayload);
@@ -1492,8 +1616,8 @@ export default function GeneratePage() {
 														<input
 															type="number"
 															value={receiptBalanceAmount}
-															onChange={(e) => setReceiptBalanceAmount(e.target.value)}
-															placeholder="Enter balance"
+															readOnly
+															placeholder="Auto-calculated balance"
 														/>
 													</label>
 													<label className={styles.inputGroup}>
