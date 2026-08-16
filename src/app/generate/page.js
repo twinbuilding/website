@@ -482,10 +482,10 @@ export default function GeneratePage() {
 		if (docType === "quotation") {
 			return items.some((item) => item.description.trim());
 		}
-		if (docType === "invoice") {
+		else if (docType === "invoice") {
 			return invoiceData !== null;
 		}
-		if (docType === "receipt") {
+		else if (docType === "receipt") {
 			const amountPaidValue = Number(receiptAmountPaid);
 			const balanceValue = Number(receiptBalanceAmount);
 			if (!receiptData || !receiptDate) return false;
